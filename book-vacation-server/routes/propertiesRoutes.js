@@ -8,9 +8,9 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", async (req, res) => {
-  console.log(req.params)
+  // console.log(req.params)
   const id = req.params.id;
-  console.log("try", id);
+  // console.log("try", id);
   const property = await getProperty(id);
   res.json({ property: property });
 })

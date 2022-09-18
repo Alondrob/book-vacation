@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const PropertyModel = require("./models/properties");
 const bodyParser = require('body-parser');
 const { getAllProperties, getProperty } = require('./controllers/propertyController');
@@ -22,7 +23,9 @@ const db = mongoose.connection;
 
 db.on("error", console.error.bind(console, "mongodb connection error;"));
 
+app.use(cors());
 app.use("/property", propertyRouter);
+
 
 app.post("/save-property", async (req, res) => {
     const body = req.body;
@@ -44,5 +47,5 @@ app.post("/save-property", async (req, res) => {
 });
 
 
-
+app.use(cors());
 app.listen(3001, () => console.log("Server is running!"));

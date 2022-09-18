@@ -8,11 +8,12 @@ const Card = ({ value }) => {
   const navigate = useNavigate();
 
   const getProperty = (e) => {
-    const id = value.id;
+    const id = value._id;
+    // navigate(`/property?id=${id}`);
     navigate(`/property/${id}`);
   };
   const handleSave = () => {
-    const id = value.id
+    const id = value._id
     console.log(id)
   }
   return (
@@ -23,7 +24,7 @@ const Card = ({ value }) => {
         </div>
 
         <div className="space-x-48">
-          <p className=" h-16">{value.title} </p>
+          <p className=" h-16">{value.name} </p>
           <FaHeart
             size={36}
             className=" mt-8 mb-2 mr-32"

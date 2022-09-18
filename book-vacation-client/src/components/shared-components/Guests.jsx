@@ -8,18 +8,24 @@ const Guests = ({ handleGuests, noOfGuests }) => {
       <input
         value={noOfGuests}
         min="0"
-        className="text-center font-extrabold  bg-slate-50 hover:bg-red-200 rounded-full h-12 w-80 mb-6"
+        className="text-center text-2xl font-extrabold 
+         bg-slate-50 hover:bg-purple-200 
+         rounded-2xl w-96 h-16 
+         space-y-4 mt-1"
       />
-      <FaPlusCircle className="-ml-9  mb-6 " onClick={() => handleGuests(1)} />
+      <FaPlusCircle
+        className="-ml-12  mt-2 "
+        size={20}
+        onClick={() => handleGuests(1)}
+      />
       {noOfGuests > 0 ? (
         <FaMinusCircle
-          className=" -ml-72 mb-6"
+          className=" -ml-80 mt-2 disabled:"
+          size={20}
           onClick={() => handleGuests(-1)}
         />
       ) : (
-        <FaMinusCircle
-          className=" -ml-72 mb-6 disabled:"
-        />
+        <FaMinusCircle className=" -ml-80 mt-2 disabled:" size={20} />
       )}
     </div>
   );

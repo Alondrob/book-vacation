@@ -9,16 +9,32 @@ const getAllProperties = async () => {
 };
 
 /**
- * 
+ *
  * @param {string} id
- * @returns property by ID 
+ * @returns property by ID
  */
 const getProperty = async (id) => {
-    //Todo , get specific property by ID
-    return PropertyModel.findById(id).exec();
+  //Todo , get specific property by ID
+  return PropertyModel.findById(id).exec();
+};
 
-}
-
+/**
+ * 
+ * @param {*} req 
+ * @param {*} res
+ * @sets a save operation on a specific property; 
+ */
+const saveProperty = async (req, res) => {
+  const body = req.body;
+  const foundProperty = await PropertyModel.findById(body.id).exec();
+  !foundProperty && res.json({ error: "Property was not found" });
+  try {
+    res.json(foundProperty);
+  } catch (err) {
+    console.error(err);
+    res.json({ error: err.message });
+  }
+};
 /**
  
   @param {mongoDbId} id , to retrieve 
@@ -60,19 +76,6 @@ const deleteSavedProperty = async (req, res) => {
   }
 };
 
-const saveProperty = async (req, res) => {
-  const body = req.body;
-  const foundProperty = await PropertyModel.findById(body.id).exec();
-  !foundProperty && res.json({ error: "Property was not found" });
-  foundProperty.name = body.name;
-  foundProperty.price = body.price;
-  try {
-    await foundProperty.save();
-    res.json(foundProperty);
-  } catch (err) {
-    console.error(err);
-    res.json({ error: err.message });
-  }
-};
+
 
 module.exports = { getAllProperties, getProperty };

@@ -8,6 +8,14 @@ const PropertySchema = new Schema({
         type: String, 
         required: true
     },
+    liked: {
+        type: Boolean,
+        required: false     
+    },
+    image: {
+        type: String,
+        required: false
+    },
     price: Number,
     updated: {
         type: Date,
