@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const PropertyModel = require("./Property");
 const { schema } = require("./Property");
 
 const Schema = mongoose.Schema;
@@ -23,15 +24,14 @@ const userSchema = new Schema({
   host_location: {
     type: String,
   },
-  bookedProperties: {
-      arrive: { type: Date },
-      checkOut: { type: Date },
-      bookedPlace: {
-          type: mongoose.Types.ObjectId,
-          ref: 'Property'
-      },
-    default: Date.now(),
-  },
+  booked: {
+    dateIn: { type: Date },
+    dateOut: { type: Date },
+    place: {
+      type: mongoose.Types.ObjectId,
+      ref: PropertyModel
+    }
+  }
 });
 
 const UserModel = mongoose.model("UserModel", userSchema);
