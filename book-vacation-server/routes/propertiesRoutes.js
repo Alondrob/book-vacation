@@ -1,18 +1,24 @@
-const { getAllProperties, getProperty } = require("../controllers/propertyController");
-const express = require('express');
+const {
+  getAllProperties,
+  getProperty,
+  createProperty, 
+  saveProperty, 
+  newProperty
+} = require("../controllers/propertyController");
+
+const express = require("express");
+
 const router = express.Router();
 
-router.get("/", async (req, res) => {
-  const properties = await getAllProperties();
-  res.json({ properties: properties });
-});
+router.get("/", getAllProperties);
+router.get("/:id", getProperty);
+router.post("/create-property", createProperty);
+router.post("/save-property", saveProperty);
 
-router.get("/:id", async (req, res) => {
-  // console.log(req.params)
-  const id = req.params.id;
-  // console.log("try", id);
-  const property = await getProperty(id);
-  res.json({ property: property });
-})
+
+
+
+
+
 
 module.exports = router;

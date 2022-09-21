@@ -1,60 +1,64 @@
-const PropertyModel = require("../models/properties");
+const { json } = require("body-parser");
+const PropertyModel = require("../models/Property");
 
-/**
-  
-@returns back all properties;
- */
-const getAllProperties = async () => {
-  return PropertyModel.find().exec();
+const getAllProperties = async (req, res) => {
+  console.log("all");
+  const properties = await PropertyModel.find().exec();
+  res.json({ properties: properties });
 };
 
-/**
- *
- * @param {string} id
- * @returns property by ID
- */
-const getProperty = async (id) => {
-  //Todo , get specific property by ID
-  return PropertyModel.findById(id).exec();
+const getProperty = async (req, res) => {
+  const id = req.params.id;
+  const property = await PropertyModel.findById(id).exec();
+  res.json({ property: property });
 };
 
-/**
- * 
- * @param {*} req 
- * @param {*} res
- * @sets a save operation on a specific property; 
- */
+const createProperty = async (req, res) => {
+  const body = { ...req.body };
+  const poroperty = new PropertyModel(body);
+  try {
+    await property.save();
+    res.status(201).json({ property: property });
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+};
+
+const editProperty = async (req, res) => {
+  const propertyId = req.params.id;
+  const body = { ...req.body };
+  const originProperty = await PropertyModel.findById(propertyId).exec();
+  await originProperty.remove();
+  const newProperty = new PropertyModel(body);
+  try {
+    await property.save();
+    res.status(201).json({ property: property });
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+};
+
+const deleteProperty = async (req, res) => {
+  const propertyId = req.params.id;
+  try {
+    const property = await PropertyModel.findById(propertyId).exec();
+    await property.remove();
+    res.json("Property Was Deleted");
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+};
+
 const saveProperty = async (req, res) => {
   const body = req.body;
   const foundProperty = await PropertyModel.findById(body.id).exec();
-  !foundProperty && res.json({ error: "Property was not found" });
-  try {
-    res.json(foundProperty);
-  } catch (err) {
-    console.error(err);
-    res.json({ error: err.message });
+  if (!foundProperty) {
+    return res.json({ error: "not found" });
   }
-};
-/**
- 
-  @param {mongoDbId} id , to retrieve 
- */
-const getAllSavedProperties = async (id) => {
+  foundProperty.name = body.name;
+  foundProperty.price = body.price;
   try {
-    const properties = await PropertyModel.find();
-  } catch (err) {
-    console.error(err);
-    res.json({ error: err.message });
-  }
-};
-
-// get specific property
-
-const getSpecificProperty = async (req, res) => {
-  const body = req.body;
-  const foundProperty = await PropertyModel.findById(body.id).exec();
-  !foundProperty && res.json({ error: "Property was not found" });
-  try {
+    await foundProperty.save();
     res.json(foundProperty);
   } catch (err) {
     console.error(err);
@@ -62,20 +66,12 @@ const getSpecificProperty = async (req, res) => {
   }
 };
 
-// unmark saved property
+//
 
-const deleteSavedProperty = async (req, res) => {
-  const body = req.body;
-  const foundProperty = await PropertyModel.findById(body.id).exec();
-  !foundProperty && res.json({ error: "Property was not found" });
-  try {
-    await foundProperty.remove().exec();
-  } catch (err) {
-    console.error(err);
-    res.json({ error: err.message });
-  }
+module.exports = {
+  getAllProperties,
+  getProperty,
+  createProperty,
+  saveProperty,
 };
 
-
-
-module.exports = { getAllProperties, getProperty };
