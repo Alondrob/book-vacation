@@ -1,36 +1,39 @@
+// import { verifyAccessToken, generateAccessToken } from "../helpers/auth";
+const {generateAccessToken} = require ("../helpers/auth")
 const UserModel = require("../models/User");
 const bycrypt = require("bcrypt");
 
 const createUser = async (req, res) => {
-  const userData = { ...req.body };
+  const user = { ...req.body };
+  
   const userNameExist = await UserModel.findOne({ userName: user.name });
-  const userEmailExist = await UserModel.findOne({ userEmail: user.email });
-
+  const userEmailExist = await UserModel.findOne({ email: user.email });
+  console.log("check userName", userNameExist, userEmailExist);
   if (userNameExist || userEmailExist) {
     res.json({ message: "It seems that this account was already created" });
   } else {
-    userData.password = await bycrypt.hash(userData.password, 10);
-    const user = new UserModel(userData);
-  }
-  try {
-    await user.save();
-    res.status(201).json({ user: user });
-  } catch (err) {
-    res.status(400).json({ error: err });
+    user.password = await bycrypt.hash(user.password, 10);
+    const userModel = new UserModel(user);
+    try {
+      await userModel.save();
+      const token = generateAccessToken(userModel.toObject());
+      res.status(201).json({ user: user, token: token });
+    } catch (err) {
+      console.log("error check", err.message)
+      res.status(400).json({ error: err });
+    }
   }
 };
 
 const editUser = async (req, res) => {
-  const id = req.params.id;
-  const user = await UserModel.findById(id).exec();
   const userUpdatedData = {
-    ...user,
+    ...req.user,
     userName: user.userName,
     email: user.email,
   };
   try {
     await user.save(userUpdatedData);
-    res.status(201).json({ user: user });
+    res.status(202).json({ user: user });
   } catch (err) {
     res.status(400).json({ error: err });
   }

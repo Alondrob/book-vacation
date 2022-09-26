@@ -7,6 +7,7 @@ const propertyRouter = require('./routes/propertiesRoutes');
 const userRouter = require('./routes/userRoutes');
 
 const app = express();
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
@@ -25,15 +26,15 @@ db.on("error", console.error.bind(console, "mongodb connection error;"));
 
 // property routes
 app.use("/property", propertyRouter);
-app.use("/property/:id", propertyRouter);
-app.use("/property/save-property", propertyRouter);
-app.use("/property/create-property", propertyRouter);
+// app.use("/property/:id", propertyRouter);
+// app.use("/property/save-property", propertyRouter);
+// app.use("/property/create-property", propertyRouter);
 
 // user routes
-app.use("/user/create-user", userRouter);
-app.use("/user/edit-user", userRouter);
-app.use("/user/delete-user", userRouter);
+app.use("/user", userRouter);
+// app.use("/user/edit-user", userRouter);
+// app.use("/user/delete-user", userRouter);
 
 
-app.use(cors());
+
 app.listen(3001, () => console.log("Server is running!"));

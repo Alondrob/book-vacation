@@ -19,7 +19,7 @@ const userSchema = new Schema({
     required: true,
   },
   is_host: {
-    Boolean,
+    type: Boolean
   },
   host_location: {
     type: String,

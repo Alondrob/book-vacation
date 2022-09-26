@@ -28,6 +28,8 @@ const editProperty = async (req, res) => {
   const propertyId = req.params.id;
   const body = { ...req.body };
   const originProperty = await PropertyModel.findById(propertyId).exec();
+  //find one and update;
+  // const updatedProperty = await PropertyModel.findOneAndUpdate({id: req.query.id }, body).exec();
   await originProperty.remove();
   const newProperty = new PropertyModel(body);
   try {

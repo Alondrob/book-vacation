@@ -1,6 +1,10 @@
 import React from "react";
 
-const SubmitButton = ({ handleSubmit }) => {
+const SubmitButton = ({ functionProp, name }) => {
+
+  const handleClick = () => {
+    functionProp()
+  }
   return (
     <div className="flex justify-center">
       <button
@@ -8,9 +12,9 @@ const SubmitButton = ({ handleSubmit }) => {
            bg-yellow-400 hover:bg-blue-200
             rounded-full h-12 w-80
              mb-6"
-        onClick={handleSubmit}
+        onClick={handleClick}
       >
-        Continue To Checkout
+        {name}
       </button>
     </div>
   );

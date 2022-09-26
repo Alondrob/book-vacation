@@ -1,7 +1,11 @@
 import { useState } from "react";
 import HeaderLayout from '../../components/header/HeaderLayout';
+import { useDispatch } from "react-redux";
+import { createNewUser } from "../../redux/api-requests/userRequests";
 
 const Register = () => {
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -13,7 +17,7 @@ const Register = () => {
            if(formData.password === formData. passConfirm) {
         console.log('before test')
         console.log('after test')
-        
+             dispatch(createNewUser(formData));
         
         
       }

@@ -6,10 +6,11 @@ import SearchBar from "./SearchBar";
 import Form from "../../pages/registration-pages/Form";
 // import Login from "./Login";
 import { useNavigate } from "react-router-dom";
-import { FaSignInAlt, FaUserCircle } from "react-icons/fa";
+import { FaSignInAlt, FaUserCircle, FaHotel } from "react-icons/fa";
 
 const HeaderLayout = () => {
   const [signupText, setSignupText] = useState(false);
+  const [hostText, setHostText] = useState(false);
   const [loginText, setLoginText] = useState(false);
   const [formPage, setFormPage] = useState(false);
   const navigate = useNavigate();
@@ -23,9 +24,10 @@ const HeaderLayout = () => {
           </button>
         </div>
         <SearchBar />
+
          {/* login icon */}
            <div
-          className="absolute right-2  mr-32"
+          className="absolute right-2  mr-48"
           onMouseEnter={() => setLoginText(true)}
           onMouseLeave={() => setLoginText(false)}
         >
@@ -38,7 +40,7 @@ const HeaderLayout = () => {
 
         {/* SignIn icon */}
         <div
-          className="absolute right-2  mr-14"
+          className="absolute right-16  mr-14"
           onMouseEnter={() => setSignupText(true)}
           onMouseLeave={() => setSignupText(false)}
         >
@@ -47,6 +49,19 @@ const HeaderLayout = () => {
           </button>
 
           {signupText && <p className=" text-center text-xs">Sign Up</p>}
+        </div>
+
+        {/* become a host */}
+        <div
+          className="absolute right-2  mr-10"
+          onMouseEnter={() => setHostText(true)}
+          onMouseLeave={() => setHostText(false)}
+        >
+          <button onClick={() => navigate("/post-property")}>
+            <FaHotel size={32} />
+          </button>
+
+          {hostText && <p className=" text-center text-xs">Become A Host</p>}
         </div>
        
       </div>
