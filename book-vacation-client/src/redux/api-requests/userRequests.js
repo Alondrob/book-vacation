@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { apiRoutes } from "../../routes";
+import { apiRoutes } from "../routes/routes";
 
 export const createNewUser = createAsyncThunk(
     "user/createNewUser",

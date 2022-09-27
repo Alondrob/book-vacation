@@ -26,14 +26,11 @@ db.on("error", console.error.bind(console, "mongodb connection error;"));
 
 // property routes
 app.use("/property", propertyRouter);
-// app.use("/property/:id", propertyRouter);
-// app.use("/property/save-property", propertyRouter);
-// app.use("/property/create-property", propertyRouter);
+
 
 // user routes
 app.use("/user", userRouter);
-// app.use("/user/edit-user", userRouter);
-// app.use("/user/delete-user", userRouter);
+
 
 
 

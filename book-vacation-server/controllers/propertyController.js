@@ -1,8 +1,8 @@
 const { json } = require("body-parser");
+const { distructObj } = require("../helpers/distruct");
 const PropertyModel = require("../models/Property");
 
 const getAllProperties = async (req, res) => {
-  console.log("all");
   const properties = await PropertyModel.find().exec();
   res.json({ properties: properties });
 };
@@ -14,13 +14,16 @@ const getProperty = async (req, res) => {
 };
 
 const createProperty = async (req, res) => {
-  const body = { ...req.body };
-  const poroperty = new PropertyModel(body);
+  console.log("hitting the route", req.body)
+  const objModel = distructObj(req.body);
+  console.log(objModel)
+  // const body = { ...req.body };
+  const property = new PropertyModel(objModel);
   try {
     await property.save();
     res.status(201).json({ property: property });
   } catch (err) {
-    res.status(400).json({ error: err });
+    res.status(400).json({ error: "what is the errror" });
   }
 };
 

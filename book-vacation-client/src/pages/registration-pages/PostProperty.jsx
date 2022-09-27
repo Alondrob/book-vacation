@@ -56,24 +56,25 @@ const PostProperty = () => {
     },
   ];
 
-  const [propertyData, setPropertyData] = useState({
-    propertyName: "",
-    propertyDescription: "",
-    address: null,
-    city: null,
-    state: null,
-    country: "",
-    zipCode: "",
-    guests: 0,
-    propertyType: "",
-    bedrooms: 0,
-    noOfBeds: 0,
-    bathrooms: 0,
+    const [propertyData, setPropertyData] = useState({
 
-    pricePerNight: null,
-    amenities: [],
-    image: [],
-  });
+        propertyName: "",
+        propertyDescription: "",
+        address: null,
+        city: null,
+        state: null,
+        country: "",
+        zipCode: "",
+        guests: 0,
+        propertyType: "",
+        bedrooms: 0,
+        noOfBeds: 0,
+        bathrooms: 0,
+
+        pricePerNight: null,
+        amenities: [],
+        image: [],
+    });
 
   const handleInput = (stateName, value) => {
     switch (stateName) {
