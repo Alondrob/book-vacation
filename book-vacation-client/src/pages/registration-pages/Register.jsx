@@ -1,32 +1,35 @@
 import { useState } from "react";
-import HeaderLayout from '../../components/header/HeaderLayout';
+import HeaderLayout from "../../components/header/HeaderLayout";
 import { useDispatch } from "react-redux";
 import { createNewUser } from "../../redux/api-requests/userRequests";
+import { useNavigate } from "react-router-dom";
+
 
 const Register = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
     password: "",
     passConfirm: "",
   });
-    
-    const submitRegistration = () => {
-           if(formData.password === formData. passConfirm) {
-        console.log('before test')
-        console.log('after test')
-             dispatch(createNewUser(formData));
-        
-        
-      }
-      else {
-        alert("Password doesn't match!")
-      }
-     console.log("formData",formData)
 
+  const submitRegistration = () => {
+    if (formData.password === formData.passConfirm) {
+      let tempObj = {
+        userName: formData.userName,
+        email: formData.email,
+        password: formData.password,
+      };
+      dispatch(createNewUser(formData));
+      setTimeout(() => { console.log("Hello"); }, 3000)
+      navigate("/")
+    } else {
+      alert("Password doesn't match!");
     }
+  
+  };
   return (
     <div className=" bg-cover h-screen bg-vacation-pattern bg-no-repeat">
       <HeaderLayout />

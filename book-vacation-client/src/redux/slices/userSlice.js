@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   createNewUser,
+  loginUser,
   editUser,
   deleteUser,
 } from "../api-requests/userRequests";
@@ -26,6 +27,18 @@ const userSlice = createSlice({
       state.token = action.payload.token;
     },
     [createNewUser.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    },
+    [loginUser.pending]: (state) => {
+      state.loading = true;
+    },
+    [loginUser.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+    },
+    [loginUser.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     },

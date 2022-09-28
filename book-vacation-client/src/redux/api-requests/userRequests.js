@@ -7,9 +7,22 @@ export const createNewUser = createAsyncThunk(
     async (userData) => {
         const response = await axios.post(apiRoutes.user.createUserRoute(), userData);
         console.log("create-user-request", response.data);
+      
+        localStorage.setItem('user', JSON.stringify(response.data))
         return response.data;
     }
+);
+
+export const loginUser = createAsyncThunk(
+    "user/loginUser",
+    async (userData) => {
+        const response = await axios.post(apiRoutes.user.loginUserRoute(), userData);
+        if (response.data) {
+            localStorage.setItem('user', JSON.stringify(response.data));
+        }
+    }
 )
+
 export const editUser = createAsyncThunk(
     "user/editUser",
     async (userData, { getState }) => {

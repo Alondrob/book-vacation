@@ -1,15 +1,18 @@
 import React from "react";
 import { useState } from "react";
 import { FaHeart, FaRegHeart } from "react-icons/fa";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const Card = ({ value }) => {
-  const [color, setColor] = useState(false);
   const navigate = useNavigate();
-
+  const { user } = useSelector(state => state.user);
+  const [color, setColor] = useState(false);
+ 
+  console.log(user);
   const getProperty = (e) => {
     const id = value._id;
-    // navigate(`/property?id=${id}`);
+    // if (!user) navigate("/");
     navigate(`/property/${id}`);
   };
   const handleSave = () => {

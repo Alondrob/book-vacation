@@ -6,6 +6,7 @@ export const apiRoutes = {
   },
   user: {
     createUserRoute: () => "http://localhost:3001/user/create-user",
+    loginUserRoute: () => "http://localhost:3001/user/login-user",
     editUserRoute: (id) => `http://localhost:3001/user/edit-user/${id}`,
     deleteUserRoute: (id) => `http://localhost:3001/user/delete-user/${id}`,
   },

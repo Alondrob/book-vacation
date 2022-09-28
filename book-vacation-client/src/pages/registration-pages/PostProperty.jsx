@@ -6,7 +6,7 @@ import PropertyInputField from "../../components/shared-components/PropertyInput
 import SubmitButton from "../../components/shared-components/SubmitButton";
 import Preview from "./Preview";
 
-const PostProperty = () => {
+const PostProperty = ({user}) => {
     const navigate = useNavigate();
   const [nextButton, setNextButton] = useState(false);
   const [backButton, setBackButton] = useState(false);
@@ -132,6 +132,7 @@ const PostProperty = () => {
         setPreview(true);
     }
     
+  console.log(user)
     
   return (
     <div>

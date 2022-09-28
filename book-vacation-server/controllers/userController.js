@@ -5,10 +5,8 @@ const bycrypt = require("bcrypt");
 
 const createUser = async (req, res) => {
   const user = { ...req.body };
-  
   const userNameExist = await UserModel.findOne({ userName: user.name });
   const userEmailExist = await UserModel.findOne({ email: user.email });
-  console.log("check userName", userNameExist, userEmailExist);
   if (userNameExist || userEmailExist) {
     res.json({ message: "It seems that this account was already created" });
   } else {
@@ -24,6 +22,11 @@ const createUser = async (req, res) => {
     }
   }
 };
+
+const loginUser = async (req, res) => {
+  const token = req.body.token;
+  
+}
 
 const editUser = async (req, res) => {
   const userUpdatedData = {

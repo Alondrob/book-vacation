@@ -19,7 +19,7 @@ const Feed = () => {
      dispatch(getAllProperties())
   },[])
 
-  console.log("prop", properties)
+
   
   return (
     <div className='grid grid-cols-4 gap-6 ml-6 m-8 bg-backgroundImage  '>
