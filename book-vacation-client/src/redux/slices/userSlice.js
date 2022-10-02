@@ -12,6 +12,7 @@ const initialState = {
   loading: false,
   error: null,
   loggedIn: false,
+  userName: ""
 };
 
 const userSlice = createSlice({
@@ -19,8 +20,9 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     auth: (state, action) => {
+      console.log(action)
       state.loggedIn = true;
-      state.user = action.payload.user;
+      state.userName = action.payload.userName;
       state.token = action.payload.token;
     }
   },

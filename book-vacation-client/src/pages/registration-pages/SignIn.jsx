@@ -1,5 +1,6 @@
-import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import Header from "../../components/header/HeaderLayout";
 import FormField from "../../components/shared-components/FormField";
 import RegistrationButton from "../../components/shared-components/RegistrationButton";
@@ -7,11 +8,19 @@ import { loginUser } from "../../redux/api-requests/userRequests";
 
 const SignIn = () => {
   const dispatch = useDispatch();
-
+  const navigate = useNavigate();
+  // const { token } = useSelector((state) => state.token);
+  const token = useSelector((state => state.user.token));
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+  
+    useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  },[token])
 
   const handleInput = (stateName, value) => {
     switch (stateName) {
@@ -25,9 +34,10 @@ const SignIn = () => {
       }
     }
   };
-  
+
   const login = () => {
-      dispatch(loginUser(formData))
+    dispatch(loginUser(formData));
+    navigate("/");
   }
   return (
     <div className=" h-screen bg-vacation-pattern">

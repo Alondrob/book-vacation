@@ -24,19 +24,20 @@ const createUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-
+  console.log("user", req.body)
   const email = req.body.email;
   const user = await UserModel.findOne({ email });
+  console.log("this user",user)
   if (!user) {
     res.json("There's no account with this email, please try again!")
   }
   const match = await bycrypt.compare(req.body.password, user.password);
-  
+  console.log("is a match", match)
   if (!match) {
     res.json("Password is invalid, please try again!");
   }
   const token = generateAccessToken(user.toObject());
- 
+ console.log(token)
   res.status(201).json({ user: user, token: token })
 }
 

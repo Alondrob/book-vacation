@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 import { apiRoutes } from "../routes/routes";
 
 export const createNewUser = createAsyncThunk(
@@ -8,7 +9,7 @@ export const createNewUser = createAsyncThunk(
         const response = await axios.post(apiRoutes.user.createUserRoute(), userData);
         console.log("create-user-request", response.data);
       
-        localStorage.setItem('user', JSON.stringify(response.data))
+        localStorage.setItem('user', JSON.stringify(response.data));
         return response.data;
     }
 );
@@ -18,11 +19,15 @@ export const loginUser = createAsyncThunk(
     async (userData) => {
         console.log("gittingthe request")
         const response = await axios.post(apiRoutes.user.loginUserRoute(), userData);
+        console.log(response)
         if (response.data) {
             localStorage.setItem('user', JSON.stringify(response.data));
+            return response.data
         }
     }
-)
+);
+
+
 
 export const editUser = createAsyncThunk(
     "user/editUser",

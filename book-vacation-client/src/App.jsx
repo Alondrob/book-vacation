@@ -1,11 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Provider, useSelector,  useDispatch  } from "react-redux";
-import { useState,useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+  useNavigate,
+} from "react-router-dom";
+import { Provider, useSelector, useDispatch } from "react-redux";
+import { useState, useEffect } from "react";
 
-
-import HeaderLayout from "./components/header/HeaderLayout";
-import Feed from "./components/layouts/Feed";
-import Form from "./pages/registration-pages/Form";
 import Register from "./pages/registration-pages/Register";
 import Main from "./pages/layout-pages/Main";
 import SignIn from "./pages/registration-pages/SignIn";
@@ -15,28 +17,29 @@ import PrivateRoute from "./components/shared-components/PrivateRoute";
 import { auth } from "./redux/slices/userSlice";
 
 const App = () => {
-
   const dispatch = useDispatch();
+  const [userToken, setUserToken] = useState("");
+
   useEffect(() => {
-    const userObject = JSON.parse(localStorage.getItem('user'));
-    dispatch(auth(userObject));
+    let user = {};
+    if (localStorage.getItem("user")) {
+      user = JSON.parse(localStorage.getItem("user"));
+      let token = user.token;
+      setUserToken(token);
+    }
+    (user) && dispatch(auth(user))
   }, []);
 
-  const validToken = useSelector((state) => state.user.token);
-  console.log(validToken);
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/form" element={<Form />} />
         <Route path="/register" element={<Register />} />
         <Route path="/sign-in" element={<SignIn />} />
 
-        <Route
-          path="/post-property" element={validToken ? <PostProperty/> : <SignIn/>}
-        />
+        <Route path="/post-property" element={<PostProperty />} />
 
-        <Route path="/property/:id" element={validToken ? <Property/> : <SignIn/>} />
+        <Route path="/property/:id" element={<Property />} />
       </Routes>
     </Router>
   );

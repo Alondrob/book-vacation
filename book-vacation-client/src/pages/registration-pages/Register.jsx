@@ -1,19 +1,28 @@
 import { useState } from "react";
 import HeaderLayout from "../../components/header/HeaderLayout";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { createNewUser } from "../../redux/api-requests/userRequests";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { token } = useSelector((state) => state.token);
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
     password: "",
     passConfirm: "",
   });
+
+  console.log(token)
+  useEffect(() => {
+    if (token) {
+      navigate("/");
+    }
+  })
 
   const submitRegistration = () => {
     if (formData.password === formData.passConfirm) {

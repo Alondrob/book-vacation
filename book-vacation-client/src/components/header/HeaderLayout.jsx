@@ -2,18 +2,50 @@ import React, { Component } from "react";
 import { useState } from "react";
 import HomePage from "./HomePage";
 import SearchBar from "./SearchBar";
-// import PopUpBar from "./PopUpBar";
-import Form from "../../pages/registration-pages/Form";
-// import Login from "./Login";
 import { useNavigate } from "react-router-dom";
 import { FaSignInAlt, FaUserCircle, FaHotel } from "react-icons/fa";
+import Icon from "../shared-components/Icon";
+import { useEffect } from "react";
+import { useDispatch,useSelector } from "react-redux";
 
 const HeaderLayout = () => {
-  const [signupText, setSignupText] = useState(false);
-  const [hostText, setHostText] = useState(false);
-  const [loginText, setLoginText] = useState(false);
-  const [formPage, setFormPage] = useState(false);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [currentUser, setCurrentUser] = useState({});
+  
+
+  const token = useSelector((state) => state.user.token);
+
+  console.log(token);
+
+  const handleIconClick = (name) => {
+    console.log(name);
+    switch (name) {
+      case "home": {
+        navigate("/");
+        break;
+      }
+      case "login": {
+        navigate("/sign-in");
+        break;
+      }
+      case "logout": {
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        window.location.reload()
+        navigate("/");
+        break;
+      }
+      case "register": {
+        navigate("/register");
+        break;
+      }
+      case "host": {
+        navigate("/post-property");
+        break;
+      }
+    }
+  };
 
   return (
     <>
@@ -24,46 +56,43 @@ const HeaderLayout = () => {
           </button>
         </div>
         <SearchBar />
+        {!token && (
+          <Icon
+            name={"login"}
+            size={32}
+            absolute={"absolute right-36"}
+            marginLeft={"ml-12"}
+            propFunction={handleIconClick}
+          />
+        )}
+        {!token && (
+          <Icon
+            name={"register"}
+            size={32}
+            absolute={"absolute right-20"}
+            marginLeft={"ml-12"}
+            propFunction={handleIconClick}
+          />
+        )}
 
-         {/* login icon */}
-           <div
-          className="absolute right-2  mr-48"
-          onMouseEnter={() => setLoginText(true)}
-          onMouseLeave={() => setLoginText(false)}
-        >
-          <button onClick={() => navigate("/sign-in")}>
-            <FaSignInAlt size={32} />
-          </button>
-
-          {loginText && <p className=" text-center text-xs">Login</p>}
-        </div>
-
-        {/* SignIn icon */}
-        <div
-          className="absolute right-16  mr-14"
-          onMouseEnter={() => setSignupText(true)}
-          onMouseLeave={() => setSignupText(false)}
-        >
-          <button onClick={() => navigate("/register")}>
-            <FaUserCircle size={32} />
-          </button>
-
-          {signupText && <p className=" text-center text-xs">Sign Up</p>}
-        </div>
-
-        {/* become a host */}
-        <div
-          className="absolute right-2  mr-10"
-          onMouseEnter={() => setHostText(true)}
-          onMouseLeave={() => setHostText(false)}
-        >
-          <button onClick={() => navigate("/post-property")}>
-            <FaHotel size={32} />
-          </button>
-
-          {hostText && <p className=" text-center text-xs">Become A Host</p>}
-        </div>
-       
+        {token && (
+          <Icon
+            name="host"
+            size={32}
+            absolute={"absolute right-24"}
+            marginLeft={"ml-20"}
+            propFunction={handleIconClick}
+          />
+        )}
+        {token && (
+          <Icon
+            name="logout"
+            size={32}
+            absolute={"absolute right-8"}
+            marginLeft={"ml-12"}
+            propFunction={handleIconClick}
+          />
+        )}
       </div>
     </>
   );
