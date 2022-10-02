@@ -16,6 +16,7 @@ export const createNewUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
     "user/loginUser",
     async (userData) => {
+        console.log("gittingthe request")
         const response = await axios.post(apiRoutes.user.loginUserRoute(), userData);
         if (response.data) {
             localStorage.setItem('user', JSON.stringify(response.data));

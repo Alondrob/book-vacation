@@ -11,12 +11,19 @@ const initialState = {
   token: null,
   loading: false,
   error: null,
+  loggedIn: false,
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    auth: (state, action) => {
+      state.loggedIn = true;
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+    }
+  },
   extraReducers: {
     [createNewUser.pending]: (state) => {
       state.loading = true;
@@ -71,4 +78,5 @@ export const slectUser = (state) => {
   return { ...state.user };
 };
 
+export const { auth } = userSlice.actions;
 export default userSlice.reducer;

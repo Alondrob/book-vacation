@@ -1,13 +1,11 @@
 import React from "react";
 
-const DateSearchBar = ({name, handleDate }) => {
-
+const DateSearchBar = ({ name, handleDate, type }) => {
   const setDate = (e) => {
-    handleDate(name, e.target.value)
-  }
+    handleDate(name, e.target.value);
+  };
   return (
     <div>
-      {/* fromDate */}
       <div className="mb-2">
         <input
           className="block text-center italic 
@@ -16,8 +14,7 @@ const DateSearchBar = ({name, handleDate }) => {
             border-sky-900 w-96 
             h-16 space-y-4 "
           type="date"
-          onChange={setDate}
-          
+          // onChange={(e) => setDate(e)}
         />
       </div>
     </div>

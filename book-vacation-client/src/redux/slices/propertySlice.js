@@ -1,7 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { allPropertiesRouteUrl } from "../routes/propertyRoutes";
 import axios from "axios";
-import { createNewProperty, getPropertyById } from "../api-requests/propertyRequests";
+import {
+  getAllProperties,
+  createNewProperty,
+  getPropertyById,
+  bookProperty
+} from "../api-requests/propertyRequests";
 import { apiRoutes } from "../routes/routes";
 
 const initialState = {
@@ -9,17 +13,9 @@ const initialState = {
   properties: [],
   property: null,
   createdProperty: {},
+  booked: [],
   error: null,
 };
-
-export const getAllProperties = createAsyncThunk(
-  "property/getAllProperties",
-  async () => {
-    const response = await axios.get(apiRoutes.property.getAll());
-    console.log("response-slice", response.data);
-    return response.data;
-  }
-);
 
 const propertySlice = createSlice({
   name: "property",
@@ -56,6 +52,17 @@ const propertySlice = createSlice({
       state.createdProperty = action.payload.property;
     },
     [createNewProperty.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    },
+    [bookProperty.pending]: (state) => {
+      state.loading = true;
+    },
+    [bookProperty.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.booked = action.payload.property;
+    },
+    [bookProperty.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     },

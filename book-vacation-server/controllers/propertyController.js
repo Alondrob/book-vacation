@@ -54,6 +54,20 @@ const deleteProperty = async (req, res) => {
   }
 };
 
+ const bookProperty = async (req, res) => {
+  console.log("hitting the route", req.body)
+  // const objModel = distructObj(req.body);
+  const property = PropertyModel.findById(req.body._id);
+  property.fromDate = new Date(req.body.fromDate);
+  property.toDate = new Date(req.body.toDate);
+  try {
+    await   
+    property.save();
+    res.status(201).json({ property: property });
+  } catch (err) {
+    res.status(400).json({ error: "what is the errror" });
+  }
+};
 const saveProperty = async (req, res) => {
   const body = req.body;
   const foundProperty = await PropertyModel.findById(body.id).exec();
@@ -78,5 +92,6 @@ module.exports = {
   getProperty,
   createProperty,
   saveProperty,
+  bookProperty
 };
 

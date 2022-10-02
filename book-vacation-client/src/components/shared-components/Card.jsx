@@ -6,23 +6,20 @@ import { useNavigate } from "react-router-dom";
 
 const Card = ({ value }) => {
   const navigate = useNavigate();
-  const { user } = useSelector(state => state.user);
+  const { user } = useSelector((state) => state.user);
   const [color, setColor] = useState(false);
- 
-  console.log(user);
+
   const getProperty = (e) => {
     const id = value._id;
-    // if (!user) navigate("/");
     navigate(`/property/${id}`);
   };
   const handleSave = () => {
-    const id = value._id
-    console.log(id)
-  }
+    const id = value._id;
+  };
   return (
     <button className="bg-white">
       <div className=" max-w-sm rounded-xl overflow-hidden shadow-xl hover:scale-105 ">
-        <div  onClick={getProperty}>
+        <div onClick={getProperty}>
           <img className="  w-64 h-64" src={value.image} />
         </div>
 
@@ -31,7 +28,7 @@ const Card = ({ value }) => {
           <FaHeart
             size={36}
             className=" mt-8 mb-2 mr-32"
-            color={color ? 'red' : 'gray'}
+            color={color ? "red" : "gray"}
             onMouseOver={() => setColor(true)}
             onMouseLeave={() => setColor(false)}
             onClick={handleSave}

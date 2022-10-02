@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Provider, useSelector } from "react-redux";
-import React from "react";
+import { Provider, useSelector,  useDispatch  } from "react-redux";
+import { useState,useEffect } from "react";
+
 
 import HeaderLayout from "./components/header/HeaderLayout";
 import Feed from "./components/layouts/Feed";
@@ -9,14 +10,20 @@ import Register from "./pages/registration-pages/Register";
 import Main from "./pages/layout-pages/Main";
 import SignIn from "./pages/registration-pages/SignIn";
 import Property from "./pages/registration-pages/Property";
-import RegisterProperty from "./pages/registration-pages/RegisterProperty";
-import HostYourHome from "./pages/misc-pages/HostYourHome";
-import Help from "./pages/misc-pages/Help";
 import PostProperty from "./pages/registration-pages/PostProperty";
-const App = () => {
-  const userData = useSelector((state) => state.user.user);
+import PrivateRoute from "./components/shared-components/PrivateRoute";
+import { auth } from "./redux/slices/userSlice";
 
-  console.log(userData);
+const App = () => {
+
+  const dispatch = useDispatch();
+  useEffect(() => {
+    const userObject = JSON.parse(localStorage.getItem('user'));
+    dispatch(auth(userObject));
+  }, []);
+
+  const validToken = useSelector((state) => state.user.token);
+  console.log(validToken);
   return (
     <Router>
       <Routes>
@@ -24,9 +31,12 @@ const App = () => {
         <Route path="/form" element={<Form />} />
         <Route path="/register" element={<Register />} />
         <Route path="/sign-in" element={<SignIn />} />
-        <Route path="/host_your_home" element={<PostProperty />} />
-        <Route path="/post-property" element={<PostProperty />} />
-        <Route path="/property/:id" element={<Property />} />
+
+        <Route
+          path="/post-property" element={validToken ? <PostProperty/> : <SignIn/>}
+        />
+
+        <Route path="/property/:id" element={validToken ? <Property/> : <SignIn/>} />
       </Routes>
     </Router>
   );

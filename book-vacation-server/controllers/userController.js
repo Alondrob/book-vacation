@@ -24,8 +24,20 @@ const createUser = async (req, res) => {
 };
 
 const loginUser = async (req, res) => {
-  const token = req.body.token;
+
+  const email = req.body.email;
+  const user = await UserModel.findOne({ email });
+  if (!user) {
+    res.json("There's no account with this email, please try again!")
+  }
+  const match = await bycrypt.compare(req.body.password, user.password);
   
+  if (!match) {
+    res.json("Password is invalid, please try again!");
+  }
+  const token = generateAccessToken(user.toObject());
+ 
+  res.status(201).json({ user: user, token: token })
 }
 
 const editUser = async (req, res) => {
@@ -55,6 +67,7 @@ const deleteUser = async (req, res) => {
 
 module.exports = {
   createUser,
+  loginUser,
   editUser,
   deleteUser,
 };

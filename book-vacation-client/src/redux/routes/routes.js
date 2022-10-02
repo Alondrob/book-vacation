@@ -1,8 +1,9 @@
 export const apiRoutes = {
   property: {
-    getAll: () => "http://localhost:3001/property",
+    getAllProperties: () => "http://localhost:3001/property",
     getPropertyById: (id) => `http://localhost:3001/property/${id}`,
-    createPropertyRoute: () => "http://localhost:3001/property/create-property"
+    createPropertyRoute: () => "http://localhost:3001/property/create-property",
+    bookPropertyRoute: (property) => "http://localhost:3001/property/book-property"
   },
   user: {
     createUserRoute: () => "http://localhost:3001/user/create-user",

@@ -31,7 +31,7 @@ const HeaderLayout = () => {
           onMouseEnter={() => setLoginText(true)}
           onMouseLeave={() => setLoginText(false)}
         >
-          <button onClick={() => navigate("/login")}>
+          <button onClick={() => navigate("/sign-in")}>
             <FaSignInAlt size={32} />
           </button>
 

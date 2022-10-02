@@ -8,7 +8,7 @@ const PropertyModel = require("../models/Property");
         state: body.state.toLowerCase(),
         country: body.country.toLowerCase(),
         zipCode: body.zipCode.toLowerCase(),
-        propertyType: body.propertyType.toLowerCase(),
+        propertyType: body.propertyType?.toLowerCase(),
         guests: body.guests,
         bedrooms: body.bedrooms,
         noOfBeds: body.noOfBeds,
