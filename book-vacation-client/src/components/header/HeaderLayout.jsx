@@ -1,25 +1,20 @@
 import React, { Component } from "react";
-import { useState } from "react";
-import HomePage from "./HomePage";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
-import { FaSignInAlt, FaUserCircle, FaHotel } from "react-icons/fa";
 import Icon from "../shared-components/Icon";
-import { useEffect } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useEffect,useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 const HeaderLayout = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [currentUser, setCurrentUser] = useState({});
-  
 
   const token = useSelector((state) => state.user.token);
-
-  console.log(token);
+  const user = useSelector((state) => state.user.user);
+ 
 
   const handleIconClick = (name) => {
-    console.log(name);
     switch (name) {
       case "home": {
         navigate("/");
@@ -30,9 +25,9 @@ const HeaderLayout = () => {
         break;
       }
       case "logout": {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        window.location.reload()
+        localStorage.removeItem("token");
+        localStorage.removeItem("user");
+        window.location.reload();
         navigate("/");
         break;
       }
@@ -50,11 +45,12 @@ const HeaderLayout = () => {
   return (
     <>
       <div className=" flex items-center justify-center  h-24  bg-lime-100 border-b-4 border-gray-300  ">
-        <div className="absolute left-0 ml-4">
-          <button>
-            <HomePage />
-          </button>
-        </div>
+        <Icon
+          name={"home"}
+          size={48}
+          absolute={"absolute left-6"}
+          propFunction={handleIconClick}
+        />
         <SearchBar />
         {!token && (
           <Icon
@@ -75,6 +71,15 @@ const HeaderLayout = () => {
           />
         )}
 
+        {token && (
+          <Icon
+            name="user"
+            size={32}
+            absolute={"absolute right-36"}
+            marginLeft={"ml-20"}
+            user={user}
+          />
+        )}
         {token && (
           <Icon
             name="host"

@@ -6,7 +6,6 @@ export const getAllProperties = createAsyncThunk(
   "property/getAllProperties",
   async () => {
     const response = await axios.get(apiRoutes.property.getAllProperties());
-    console.log("response-slice", response.data);
     return response.data;
   }
 );
@@ -23,14 +22,15 @@ export const getPropertyById = createAsyncThunk(
 export const createNewProperty = createAsyncThunk(
   "property/createNewProperty",
   async (propertyData) => {
-    let userData = localStorage.getItem('user')
-    console.log("data", propertyData);
+    const user =  JSON.parse(localStorage.getItem('user'));
+    console.log("token", user.token);
     const response = await axios.post(
       apiRoutes.property.createPropertyRoute(),
       propertyData,
       {
         headers: {
-          'Authorization': 'Bearer' + '' + userData.token
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${user.token}`
         }
       }
     );

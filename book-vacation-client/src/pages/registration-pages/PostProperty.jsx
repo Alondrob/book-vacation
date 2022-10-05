@@ -1,80 +1,32 @@
 import { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import HeaderLayout from "../../components/header/HeaderLayout";
-import Next from "../../components/shared-components/Next";
-import PropertyInputField from "../../components/shared-components/PropertyInputField";
 import SubmitButton from "../../components/shared-components/SubmitButton";
-import Preview from "./Preview";
+import FormField from "../../components/shared-components/FormField";
+import { createNewProperty } from "../../redux/api-requests/propertyRequests";
 
-const PostProperty = ({user}) => {
-    const navigate = useNavigate();
-  const [nextButton, setNextButton] = useState(false);
-  const [backButton, setBackButton] = useState(false);
-  const [preview, setPreview] = useState(false);
-  const inputArrOne = [
-    {
-      name: "Property Name",
-      height: 10,
-      type: "text",
-      stateName: "propertyName",
-    },
-    {
-      name: "Describe Your Property",
-      height: 36,
-      type: "text area",
-      stateName: "propertyDescription",
-    },
-    { name: "Address", height: 10, type: "text", stateName: "address" },
-    { name: "City", height: 10, type: "text", stateName: "city" },
-    { name: "State", height: 10, type: "text", stateName: "state" },
-    { name: "Country", height: 10, type: "text", stateName: "country" },
-    { name: "Zip Code", height: 10, type: "text", stateName: "zipCode" },
-  ];
-  const inputArrayTwo = [
-    { name: "Guests", height: 10, type: "number", stateName: "guests" },
-    {
-      name: "Property Type",
-      height: 10,
-      type: "text",
-      stateName: "propertyType",
-    },
-    { name: "Bedrooms", height: 10, type: "number", stateName: "bedrooms" },
-    { name: "Beds", height: 10, type: "number", stateName: "noOfBeds" },
-    { name: "Baths", height: 10, type: "number", stateName: "bathrooms" },
-    {
-      name: "Price Per Night",
-      height: 10,
-      type: "number",
+import { useDispatch } from "react-redux";
 
-      stateName: "pricePerNight",
-    },
-    {
-      name: "Ameneties",
-      height: 10,
-      type: "text",
-      stateName: "amenities",
-    },
-  ];
-
-    const [propertyData, setPropertyData] = useState({
-
-        propertyName: "",
-        propertyDescription: "",
-        address: null,
-        city: null,
-        state: null,
-        country: "",
-        zipCode: "",
-        guests: 0,
-        propertyType: "",
-        bedrooms: 0,
-        noOfBeds: 0,
-        bathrooms: 0,
-
-        pricePerNight: null,
-        amenities: [],
-        image: [],
-    });
+const PostProperty = ({ user }) => {
+  const dispatch = useDispatch();
+  const [propertyData, setPropertyData] = useState({
+    propertyName: "",
+    
+    address: null,
+    city: null,
+    state: null,
+    country: "",
+    zipCode: "",
+    guests: 0,
+    propertyType: "",
+    amenities: [],
+    bedrooms: 0,
+    noOfBeds: 0,
+    bathrooms: 0,
+    pricePerNight: null,
+    propertyDescription: "",
+    image: [],
+  });
 
   const handleInput = (stateName, value) => {
     switch (stateName) {
@@ -99,11 +51,14 @@ const PostProperty = ({user}) => {
       case "zipCode":
         setPropertyData({ ...propertyData, zipCode: value });
         break;
-      case "guests":
-        setPropertyData({ ...propertyData, guests: value });
-        break;
       case "propertyType":
         setPropertyData({ ...propertyData, propertyType: value });
+        break;
+      case "amenities":
+        setPropertyData({ ...propertyData, amenities: value });
+        break;
+      case "guests":
+        setPropertyData({ ...propertyData, guests: value });
         break;
       case "bedrooms":
         setPropertyData({ ...propertyData, bedrooms: value });
@@ -117,71 +72,216 @@ const PostProperty = ({user}) => {
       case "pricePerNight":
         setPropertyData({ ...propertyData, pricePerNight: value });
         break;
-      case "amenities":
-        setPropertyData({ ...propertyData, amenities: value });
-        break;
     }
   };
 
-  const movePage = (name) => {
-    console.log(name);
-    setNextButton(!nextButton);
+  const submitProperty = () => {
+    dispatch(createNewProperty(propertyData));
   };
-    
-    const handlePreview = () => {
-        setPreview(true);
-    }
-    
-  console.log(user)
-    
+
   return (
     <div>
       <HeaderLayout />
-      {(!nextButton && !preview) && (
-        <div
-          className="w-full h-screen bg-cover 
+
+      <div
+        className="w-full h-screen bg-cover 
                     bg-vacation-pattern
-                    bg-no-repeat  "
-        >
-          {inputArrOne.map((item, key) => (
-            <PropertyInputField
-              key={key}
-              name={item.name}
-              stateName={item.stateName}
-              height={item.height}
-              type={item.type}
-              handleInput={handleInput}
-            />
-          ))}
-          <Next movePage={movePage} name="forward" />
+                    bg-no-repeat 
+                    grid grid-cols-4  space-x-3"
+      >
+        {/* Column 1 */}
+        <div>
+          <FormField
+            stateName={"propertyName"}
+            type={"text"}
+            placeholder={"Name Your Property..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-6"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
+
+          <FormField
+            stateName={"address"}
+            type={"text"}
+            placeholder={"Address..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
+          <FormField
+            stateName={"city"}
+            type={"text"}
+            placeholder={"City..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
+          <FormField
+            stateName={"state"}
+            type={"text"}
+            placeholder={"State..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
+          <FormField
+            stateName={"zipCode"}
+            type={"text"}
+            placeholder={"Zip Code..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
+          <FormField
+            stateName={"propertyType"}
+            type={"text"}
+            placeholder={"Property Type..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
         </div>
-      )}
-      {/* ************ */}
-      {(nextButton && !preview) && (
-        <div
-          className="w-full h-screen bg-cover 
-                    bg-vacation-pattern
-                    bg-no-repeat  "
-        >
-          {inputArrayTwo.map((item, key) => (
-            <PropertyInputField
-              key={key}
-              name={item.name}
-              stateName={item.stateName}
-              height={item.height}
-              type={item.type}
-              handleInput={handleInput}
-            />
-          ))}
-                  <SubmitButton
-                      name={"Preview And Images"}
-                      functionProp={handlePreview}
-                  />
-                
-          <Next name="back" movePage={movePage} />
+        {/* Column 2 */}
+        <div>
+          <FormField
+            stateName={"amenities"}
+            type={"text"}
+            placeholder={"Amenities..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-6"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
+          <FormField
+            stateName={"guests"}
+            type={"number"}
+            min={0}
+            placeholder={"Number Of Guests..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
+          <FormField
+            stateName={"bedrooms"}
+            type={"number"}
+            min={0}
+            placeholder={"Bedrooms..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
+          <FormField
+            stateName={"noOfBeds"}
+            type={"number"}
+            min={0}
+            placeholder={"Number Of Beds..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
+          <FormField
+            stateName={"bathrooms"}
+            type={"number"}
+            min={0}
+            placeholder={"Number Of Bathrooms..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
+          <FormField
+            stateName={"pricePerNight"}
+            type={"number"}
+            min={0}
+            placeholder={"$ Price Per Night..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
         </div>
-          )}
-          {preview && <Preview propertyData={propertyData} />}
+        {/* Column 3 */}
+        <div>
+          <FormField
+            stateName={"propertyDescription"}
+            type={"text area"}
+            placeholder={"Describe Your Peoperty..."}
+            rounded={"rounded-lg"}
+            height={"h-80"}
+            width={"w-80"}
+            marginTop={"mt-6"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-20"}
+            handleInput={handleInput}
+          />
+          <FormField
+            stateName={"propertyName"}
+            type={"file"}
+            placeholder={"Upload Images..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-80"}
+            marginTop={"mt-6"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-20"}
+            handleInput={handleInput}
+          />
+        </div>
+        {/* Column 3 */}
+        <div>
+          <SubmitButton
+            width={"w-48"}
+            name={"Post Property"}
+            marginTop={"mt-48"}
+            functionProp={submitProperty}
+          />
+        </div>
+      </div>
     </div>
   );
 };

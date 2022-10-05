@@ -15,21 +15,20 @@ import Property from "./pages/registration-pages/Property";
 import PostProperty from "./pages/registration-pages/PostProperty";
 import PrivateRoute from "./components/shared-components/PrivateRoute";
 import { auth } from "./redux/slices/userSlice";
+import userEvent from "@testing-library/user-event";
 
 const App = () => {
   const dispatch = useDispatch();
-  const [userToken, setUserToken] = useState("");
+  const [user, setUser] = useState("");
 
-  useEffect(() => {
-    let user = {};
-    if (localStorage.getItem("user")) {
-      user = JSON.parse(localStorage.getItem("user"));
-      let token = user.token;
-      setUserToken(token);
+  useEffect( () => {
+    if (localStorage.getItem('user')) {
+      const user =  JSON.parse(localStorage.getItem('user'));
+      console.log("user", user)
+      dispatch(auth(user));
     }
-    (user) && dispatch(auth(user))
   }, []);
-
+  console.log(user === null)
   return (
     <Router>
       <Routes>

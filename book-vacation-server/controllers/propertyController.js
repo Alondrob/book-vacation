@@ -15,10 +15,9 @@ const getProperty = async (req, res) => {
 
 const createProperty = async (req, res) => {
   console.log("hitting the route", req.body)
-  const objModel = distructObj(req.body);
-  console.log(objModel)
   // const body = { ...req.body };
-  const property = new PropertyModel(objModel);
+  const property = new PropertyModel(req.body);
+ console.log(property)
   try {
     await property.save();
     res.status(201).json({ property: property });

@@ -9,7 +9,7 @@ export const createNewUser = createAsyncThunk(
         const response = await axios.post(apiRoutes.user.createUserRoute(), userData);
         console.log("create-user-request", response.data);
       
-        localStorage.setItem('user', JSON.stringify(response.data));
+          localStorage.setItem('user', JSON.stringify(response.data));
         return response.data;
     }
 );

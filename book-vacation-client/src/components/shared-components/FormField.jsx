@@ -4,7 +4,14 @@ const FormField = ({
   stateName,
   placeholder,
   type,
+  min,
+  height,
+  width,
+  rounded,
   marginTop,
+  marginBottom,
+  marginLeft,
+  marginRight,
   handleInput,
 }) => {
   const handleChange = (e) => {
@@ -12,11 +19,22 @@ const FormField = ({
   };
   return (
     <div>
-      <div className={`flex justify-center ${marginTop} mb-6`}>
+      <div className={`flex justify-center
+       ${marginTop}
+       ${marginLeft}
+        ${marginBottom}`
+      }>
         <input
-          className=" block text-center italic  hover:bg-red-200 font-bold rounded-full border-2 border-sky-900 w-80 h-12 space-y-4"
+          className={` block text-center italic 
+           hover:bg-red-200 font-bold 
+           border-2 border-sky-900 
+           ${width} 
+           ${rounded}
+           ${height} 
+           space-y-4`}
           placeholder={placeholder}
           type={type}
+          min={min}
           onChange={(e) => handleChange(e)}
         />
       </div>

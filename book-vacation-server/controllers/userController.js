@@ -37,7 +37,6 @@ const loginUser = async (req, res) => {
     res.json("Password is invalid, please try again!");
   }
   const token = generateAccessToken(user.toObject());
- console.log(token)
   res.status(201).json({ user: user, token: token })
 }
 

@@ -1,8 +1,15 @@
 import { useState } from "react";
-import { FaSignInAlt,FaSignOutAlt, FaUserCircle, FaHotel } from "react-icons/fa";
+import {
+  FaSignInAlt,
+  FaSignOutAlt,
+  FaUserCircle,
+  FaHotel,
+  FaAirbnb,
+} from "react-icons/fa";
 
 const Icon = ({
   name,
+  user,
   size,
   absolute,
   marginLeft,
@@ -14,8 +21,7 @@ const Icon = ({
 }) => {
   const [text, setText] = useState(false);
 
-    const handleClick = () => {
-      console.log(name)
+  const handleClick = () => {
     propFunction(name);
   };
   return (
@@ -23,14 +29,17 @@ const Icon = ({
       className={`
             ${absolute}
           `}
+       
       onMouseEnter={() => setText(true)}
       onMouseLeave={() => setText(false)}
     >
       <button onClick={() => handleClick()}>
+        {name === "home" && <FaAirbnb size={size} />}
         {name === "login" && <FaSignInAlt size={size} />}
         {name === "register" && <FaUserCircle size={size} />}
         {name === "host" && <FaHotel size={size} />}
         {name === "logout" && <FaSignOutAlt size={size} />}
+        {name === "user" && <h3 className="font-extrabold">Hello {user.userName}</h3>}
         {/* {name === "login" &&  <FaSignInAlt size={size} />} */}
       </button>
       {text && <p className=" text-center text-xs">{name.toUpperCase()}</p>}

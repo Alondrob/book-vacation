@@ -20,9 +20,10 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     auth: (state, action) => {
-      console.log(action)
+      console.log("hello World")
+      console.log("data",action)
       state.loggedIn = true;
-      state.userName = action.payload.userName;
+      state.user = action.payload.user;
       state.token = action.payload.token;
     }
   },
