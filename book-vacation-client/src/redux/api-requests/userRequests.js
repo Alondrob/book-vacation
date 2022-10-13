@@ -4,50 +4,73 @@ import { Navigate, useNavigate } from "react-router-dom";
 import { apiRoutes } from "../routes/routes";
 
 export const createNewUser = createAsyncThunk(
-    "user/createNewUser",
-    async (userData) => {
-        const response = await axios.post(apiRoutes.user.createUserRoute(), userData);
-        console.log("create-user-request", response.data);
-      
-          localStorage.setItem('user', JSON.stringify(response.data));
-        return response.data;
-    }
+  "user/createNewUser",
+  async (userData) => {
+    const response = await axios.post(
+      apiRoutes.user.createUserRoute(),
+      userData
+    );
+    console.log("create-user-request", response.data);
+
+    localStorage.setItem("user", JSON.stringify(response.data));
+    return response.data;
+  }
 );
 
 export const loginUser = createAsyncThunk(
-    "user/loginUser",
-    async (userData) => {
-        console.log("gittingthe request")
-        const response = await axios.post(apiRoutes.user.loginUserRoute(), userData);
-        console.log(response)
-        if (response.data) {
-            localStorage.setItem('user', JSON.stringify(response.data));
-            return response.data
-        }
+  "user/loginUser",
+  async (userData) => {
+    console.log("gittingthe request");
+    const response = await axios.post(
+      apiRoutes.user.loginUserRoute(),
+      userData
+    );
+    console.log(response);
+    if (response.data) {
+      localStorage.setItem("user", JSON.stringify(response.data));
+      return response.data;
     }
+  }
 );
 
-
-
 export const editUser = createAsyncThunk(
-    "user/editUser",
-    async (userData, { getState }) => {
-        const state = getState();
-        const token = state.token();
-        const response = await axios.put(apiRoutes.user.createUserRoute(), userData, {
-            headers: {
-                "Authorazation": `Basic ${token}`
-            }
-        });
-        console.log("create-user-request", response.data);
-        return response.data;
-    }
-)
+  "user/editUser",
+  async (userData, { getState }) => {
+    const state = getState();
+    const token = state.token();
+    const response = await axios.put(
+      apiRoutes.user.createUserRoute(),
+      userData,
+      {
+        headers: {
+          Authorazation: `Basic ${token}`,
+        },
+      }
+    );
+    console.log("create-user-request", response.data);
+    return response.data;
+  }
+);
 export const deleteUser = createAsyncThunk(
-    "user/deleteUser",
-    async (useData) => {
-        const response = await axios.delete(apiRoutes.user.createUserRoute());
-        console.log("create-user-request", response.data);
-        return response.data;
-    }
-)
+  "user/deleteUser",
+  async (useData) => {
+    const response = await axios.delete(apiRoutes.user.createUserRoute());
+    console.log("create-user-request", response.data);
+    return response.data;
+  }
+);
+
+export const getUserProperties = createAsyncThunk(
+  "user/getUserProperties",
+  async (user) => {
+      const response = await axios.get(apiRoutes.user.getUserProperties(user.user._id),
+          {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+          });
+      console.log(response.data)
+    return response.data;
+  }
+);

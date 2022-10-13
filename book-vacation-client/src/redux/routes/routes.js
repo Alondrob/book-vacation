@@ -8,6 +8,9 @@ export const apiRoutes = {
   user: {
     createUserRoute: () => "http://localhost:3001/user/create-user",
     loginUserRoute: () => "http://localhost:3001/user/login-user",
+    getUserProperties: (id) => `http://localhost:3001/user/${id}/properties`,
+    createUserBookings: () => "http://localhost:3001/user/book-property",
+    getUserBookings: () => "http://localhost:3001/user/get-user-bookings",
     editUserRoute: (id) => `http://localhost:3001/user/edit-user/${id}`,
     deleteUserRoute: (id) => `http://localhost:3001/user/delete-user/${id}`,
   },

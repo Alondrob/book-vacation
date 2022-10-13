@@ -1,10 +1,12 @@
 import { useState } from "react";
+import {BsEmojiSunglasses} from "react-icons/bs"
 import {
   FaSignInAlt,
   FaSignOutAlt,
   FaUserCircle,
   FaHotel,
   FaAirbnb,
+  FaCity
 } from "react-icons/fa";
 
 const Icon = ({
@@ -39,6 +41,8 @@ const Icon = ({
         {name === "register" && <FaUserCircle size={size} />}
         {name === "host" && <FaHotel size={size} />}
         {name === "logout" && <FaSignOutAlt size={size} />}
+        {name === "my hosting spots" && <FaCity size={size} />}
+        {name === "my bookings" && <BsEmojiSunglasses size={size} />}
         {name === "user" && <h3 className="font-extrabold">Hello {user.userName}</h3>}
         {/* {name === "login" &&  <FaSignInAlt size={size} />} */}
       </button>

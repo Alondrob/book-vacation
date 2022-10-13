@@ -1,8 +1,9 @@
 const PropertyModel = require("../models/Property");
- const distructObj = (body) => {
+
+const distructObj = (body, user) => {
     return {
-        name: body.propertyName?.toLowerCase(),
-        description: body.propertyDescription?.toLowerCase(),
+        name: body.name?.toLowerCase(),
+        description: body.description?.toLowerCase(),
         address: body.address?.toLowerCase(),
         city: body.city?.toLowerCase(),
         state: body.state?.toLowerCase(),
@@ -15,7 +16,8 @@ const PropertyModel = require("../models/Property");
         bathrooms: body.bathrooms,
         amenities: body.amenities,
         pricePerNight: body.pricePerNight,
-        image: body.images,       
+        image: body.images,   
+        creator: user 
     }
 }
 

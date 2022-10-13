@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const PropertySchema = new Schema({
-  name: {type: String,required: true},
+  name: { type: String, required: true },
   description: { type: String, required: true},
   address: { type: String, required: true },
   city: { type: String, required: true },
@@ -17,16 +17,16 @@ const PropertySchema = new Schema({
   bedrooms: { type: Number, required: true },
   noOfBeds: { type: Number, required: true },
   bathrooms: { type: Number, required: true },
+  pricePerNight: { type: Number, required: true },
   amenities: [String],
-  pricePerNight: {type: Number,   required: true},
+  
   liked: {   type: Boolean,  required: false  },
   image: {type: [{ type: String }],required: false },
   fromDate: { type: Date },
   toDate: { type: Date },
   creator: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: false,
-    ref: "User",
+    type: Schema.Types.ObjectId,
+    ref: 'User'
   },
   bookedBy: {
     type: [mongoose.Types.ObjectId],

@@ -13,8 +13,9 @@ const HeaderLayout = () => {
   const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.user);
  
-
+  console.log(user['is_host'])
   const handleIconClick = (name) => {
+    
     switch (name) {
       case "home": {
         navigate("/");
@@ -39,6 +40,14 @@ const HeaderLayout = () => {
         navigate("/post-property");
         break;
       }
+      case "my bookings": {
+        navigate("/guest-page");
+        break;
+      }
+      case "my hosting spots": {
+        navigate("/host-page");
+        break;
+      }
     }
   };
 
@@ -48,9 +57,23 @@ const HeaderLayout = () => {
         <Icon
           name={"home"}
           size={48}
-          absolute={"absolute left-6"}
+          absolute={"absolute left-4"}
           propFunction={handleIconClick}
         />
+        <Icon
+          name={"my bookings"}
+          size={48}
+          absolute={"absolute left-24"}
+          propFunction={handleIconClick}
+        />
+        {user['is_host'] &&
+          <Icon
+            name={"my hosting spots"}
+            size={48}
+            absolute={"absolute left-48"}
+            propFunction={handleIconClick}
+          />
+        }
         <SearchBar />
         {!token && (
           <Icon

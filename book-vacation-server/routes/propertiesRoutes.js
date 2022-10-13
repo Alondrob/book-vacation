@@ -1,6 +1,7 @@
 const {
   getAllProperties,
   getProperty,
+  getUserProperties,
   createProperty, 
   saveProperty, 
   bookProperty,

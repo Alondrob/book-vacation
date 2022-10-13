@@ -7,15 +7,14 @@ import {
 } from "react-router-dom";
 import { Provider, useSelector, useDispatch } from "react-redux";
 import { useState, useEffect } from "react";
-
 import Register from "./pages/registration-pages/Register";
 import Main from "./pages/layout-pages/Main";
 import SignIn from "./pages/registration-pages/SignIn";
 import Property from "./pages/registration-pages/Property";
 import PostProperty from "./pages/registration-pages/PostProperty";
-import PrivateRoute from "./components/shared-components/PrivateRoute";
 import { auth } from "./redux/slices/userSlice";
-import userEvent from "@testing-library/user-event";
+import GuestPage from "./pages/user-pages/GuestPage";
+import HostPage from "./pages/user-pages/HostPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -24,17 +23,18 @@ const App = () => {
   useEffect( () => {
     if (localStorage.getItem('user')) {
       const user =  JSON.parse(localStorage.getItem('user'));
-      console.log("user", user)
       dispatch(auth(user));
     }
   }, []);
-  console.log(user === null)
+
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/register" element={<Register />} />
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/host-page" element={<HostPage />} />
+        <Route path="/guest-page" element={<GuestPage />} />
 
         <Route path="/post-property" element={<PostProperty />} />
 

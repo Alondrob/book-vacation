@@ -9,7 +9,7 @@ import { useEffect } from "react";
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { token } = useSelector((state) => state.token);
+  // const { token } = useSelector((state) => state.token);
   const [formData, setFormData] = useState({
     userName: "",
     email: "",
@@ -17,12 +17,11 @@ const Register = () => {
     passConfirm: "",
   });
 
-  console.log(token)
-  useEffect(() => {
-    if (token) {
-      navigate("/");
-    }
-  })
+  // useEffect(() => {
+  //   if (token) {
+  //     navigate("/");
+  //   }
+  // })
 
   const submitRegistration = () => {
     if (formData.password === formData.passConfirm) {

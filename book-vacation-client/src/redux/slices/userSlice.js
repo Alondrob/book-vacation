@@ -4,6 +4,7 @@ import {
   loginUser,
   editUser,
   deleteUser,
+  getUserProperties,
 } from "../api-requests/userRequests";
 
 const initialState = {
@@ -12,7 +13,9 @@ const initialState = {
   loading: false,
   error: null,
   loggedIn: false,
-  userName: ""
+  userName: "",
+  userProperties: [],
+  userBookings: []
 };
 
 const userSlice = createSlice({
@@ -20,8 +23,6 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     auth: (state, action) => {
-      console.log("hello World")
-      console.log("data",action)
       state.loggedIn = true;
       state.user = action.payload.user;
       state.token = action.payload.token;
@@ -71,6 +72,18 @@ const userSlice = createSlice({
       state.user = action.payload.user;
     },
     [deleteUser.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    },
+    [getUserProperties.pending]: (state) => {
+      state.loading = true;
+    },
+    [getUserProperties.fulfilled]: (state, action) => {
+      console.log(action.payload)
+      state.loading = false;
+      state.userProperties =  action.payload;
+    },
+    [getUserProperties.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     },

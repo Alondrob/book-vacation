@@ -2,7 +2,6 @@ const jwt = require("jsonwebtoken");
 const bycrypt = require("bcrypt");
 
 const salt = bycrypt.genSaltSync(10);
-console.log("salt", salt)
 const secret =  '$2b$10$r4gSCRHAGdYRILBjomH/N'
 
 
@@ -12,7 +11,6 @@ const generateAccessToken = (userObject) => {
 
 const verifyAccessToken = (token) => {
   return new Promise((res, rej) => {
-    console.log("verify" , token)
     if (!token) {
       rej("Toekn Is Null");
     } else {

@@ -19,19 +19,25 @@ const userSchema = new Schema({
     required: true,
   },
   is_host: {
-    type: Boolean
+    type: Boolean,
+    required: false,
   },
   host_location: {
     type: String,
   },
+  properties: [{
+    type: mongoose.Types.ObjectId,
+    ref: 'PropertyModel'
+  }],
+
   booked: {
     dateIn: { type: Date },
     dateOut: { type: Date },
     place: {
       type: mongoose.Types.ObjectId,
-      ref: PropertyModel
-    }
-  }
+      ref: PropertyModel,
+    },
+  },
 });
 
 const UserModel = mongoose.model("UserModel", userSchema);

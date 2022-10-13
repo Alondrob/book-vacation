@@ -1,6 +1,7 @@
 const { json } = require("body-parser");
 const { distructObj } = require("../helpers/distruct");
 const PropertyModel = require("../models/Property");
+const UserModel = require("../models/User");
 
 const getAllProperties = async (req, res) => {
   const properties = await PropertyModel.find().exec();
@@ -13,13 +14,17 @@ const getProperty = async (req, res) => {
   res.json({ property: property });
 };
 
+
+
 const createProperty = async (req, res) => {
-  console.log("hitting the route", req.body)
-  // const body = { ...req.body };
-  const property = new PropertyModel(req.body);
- console.log(property)
+  const user = await UserModel.findOne({ email: req.user.email });
+  const newInstanceData = distructObj(req.body, user)
+  const property = new PropertyModel(newInstanceData);
+  user.properties.push(property.toObject());
+  user.is_host = true;
   try {
     await property.save();
+    await user.update(user);
     res.status(201).json({ property: property });
   } catch (err) {
     res.status(400).json({ error: "what is the errror" });
@@ -53,15 +58,12 @@ const deleteProperty = async (req, res) => {
   }
 };
 
- const bookProperty = async (req, res) => {
-  console.log("hitting the route", req.body)
-  // const objModel = distructObj(req.body);
+const bookProperty = async (req, res) => {
   const property = PropertyModel.findById(req.body._id);
   property.fromDate = new Date(req.body.fromDate);
   property.toDate = new Date(req.body.toDate);
   try {
-    await   
-    property.save();
+    await property.save();
     res.status(201).json({ property: property });
   } catch (err) {
     res.status(400).json({ error: "what is the errror" });
@@ -91,6 +93,5 @@ module.exports = {
   getProperty,
   createProperty,
   saveProperty,
-  bookProperty
+  bookProperty,
 };
-

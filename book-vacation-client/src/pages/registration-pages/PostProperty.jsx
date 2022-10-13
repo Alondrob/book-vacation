@@ -10,8 +10,7 @@ import { useDispatch } from "react-redux";
 const PostProperty = ({ user }) => {
   const dispatch = useDispatch();
   const [propertyData, setPropertyData] = useState({
-    propertyName: "",
-    
+    name: "",
     address: null,
     city: null,
     state: null,
@@ -28,13 +27,14 @@ const PostProperty = ({ user }) => {
     image: [],
   });
 
+
   const handleInput = (stateName, value) => {
     switch (stateName) {
       case "propertyName":
-        setPropertyData({ ...propertyData, propertyName: value });
+        setPropertyData({ ...propertyData, name: value });
         break;
       case "propertyDescription":
-        setPropertyData({ ...propertyData, propertyDescription: value });
+        setPropertyData({ ...propertyData, description: value });
         break;
       case "address":
         setPropertyData({ ...propertyData, address: value });
@@ -64,7 +64,7 @@ const PostProperty = ({ user }) => {
         setPropertyData({ ...propertyData, bedrooms: value });
         break;
       case "noOfBeds":
-        setPropertyData({ ...propertyData, noofBeds: value });
+        setPropertyData({ ...propertyData, noOfBeds: value });
         break;
       case "bathrooms":
         setPropertyData({ ...propertyData, bathrooms: value });
@@ -132,6 +132,18 @@ const PostProperty = ({ user }) => {
             stateName={"state"}
             type={"text"}
             placeholder={"State..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
+          <FormField
+            stateName={"country"}
+            type={"text"}
+            placeholder={"Country..."}
             rounded={"rounded-lg"}
             height={"h-12"}
             width={"w-64"}
@@ -244,6 +256,18 @@ const PostProperty = ({ user }) => {
             marginLeft={"ml-5"}
             handleInput={handleInput}
           />
+           <FormField
+            stateName={"image"}
+            type={"file"}
+            placeholder={"Upload Images..."}
+            rounded={"rounded-lg"}
+            height={"h-12"}
+            width={"w-64"}
+            marginTop={"mt-2"}
+            marginBottom={"mb-5"}
+            marginLeft={"ml-5"}
+            handleInput={handleInput}
+          />
         </div>
         {/* Column 3 */}
         <div>
@@ -259,18 +283,7 @@ const PostProperty = ({ user }) => {
             marginLeft={"ml-20"}
             handleInput={handleInput}
           />
-          <FormField
-            stateName={"propertyName"}
-            type={"file"}
-            placeholder={"Upload Images..."}
-            rounded={"rounded-lg"}
-            height={"h-12"}
-            width={"w-80"}
-            marginTop={"mt-6"}
-            marginBottom={"mb-5"}
-            marginLeft={"ml-20"}
-            handleInput={handleInput}
-          />
+         
         </div>
         {/* Column 3 */}
         <div>
