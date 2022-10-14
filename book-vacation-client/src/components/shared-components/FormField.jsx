@@ -13,10 +13,12 @@ const FormField = ({
   marginLeft,
   marginRight,
   handleInput,
+  value
 }) => {
   const handleChange = (e) => {
     handleInput(stateName, e.target.value);
   };
+
   return (
     <div>
       <div className={`flex justify-center
@@ -35,6 +37,7 @@ const FormField = ({
           placeholder={placeholder}
           type={type}
           min={min}
+          value={value}
           onChange={(e) => handleChange(e)}
         />
       </div>

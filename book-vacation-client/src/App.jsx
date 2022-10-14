@@ -15,6 +15,7 @@ import PostProperty from "./pages/registration-pages/PostProperty";
 import { auth } from "./redux/slices/userSlice";
 import GuestPage from "./pages/user-pages/GuestPage";
 import HostPage from "./pages/user-pages/HostPage";
+import UpdateProperty from "./pages/registration-pages/UpdateProperty";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,7 @@ const App = () => {
         <Route path="/sign-in" element={<SignIn />} />
         <Route path="/host-page" element={<HostPage />} />
         <Route path="/guest-page" element={<GuestPage />} />
+        <Route path="/edit-property/:id" element={<UpdateProperty />} />
 
         <Route path="/post-property" element={<PostProperty />} />
 

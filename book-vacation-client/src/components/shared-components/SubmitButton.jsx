@@ -2,6 +2,7 @@ import React from "react";
 
 const SubmitButton = ({
   functionProp,
+  id,
   name,
   width,
   marginTop,
@@ -13,7 +14,7 @@ const SubmitButton = ({
 }) => {
 
   const handleClick = () => {
-    functionProp(name)
+    functionProp(name, id)
   }
   return (
     <div className="flex justify-center">

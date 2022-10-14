@@ -72,7 +72,6 @@ const getUserProperties = async (req, res) => {
   //   propArr.push(propertyObj);
   // }
   const properties = await PropertyModel.find({ creator: userId }).sort({createdAt: -1})
-  console.log("arr", properties);
   try {
     res.status(201).json(properties);
   } catch (err)  {

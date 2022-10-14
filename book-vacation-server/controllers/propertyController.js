@@ -32,16 +32,18 @@ const createProperty = async (req, res) => {
 };
 
 const editProperty = async (req, res) => {
-  const propertyId = req.params.id;
-  const body = { ...req.body };
-  const originProperty = await PropertyModel.findById(propertyId).exec();
-  //find one and update;
-  // const updatedProperty = await PropertyModel.findOneAndUpdate({id: req.query.id }, body).exec();
-  await originProperty.remove();
-  const newProperty = new PropertyModel(body);
+  console.log("hitting")
+  const user = await UserModel.findOne({ email: req.user.email });
+  const foundProperty = await PropertyModel.findById(req.body.id).exec();
+  console.log("found", foundProperty)
+  const newInstanceData = distructObj(req.body, user)
+  await foundProperty?.update(newInstanceData);
+
+  console.log("updated", foundProperty);
+  
   try {
-    await property.save();
-    res.status(201).json({ property: property });
+    await foundProperty.save();
+    res.status(201).json({ property: foundProperty });
   } catch (err) {
     res.status(400).json({ error: err });
   }
@@ -92,6 +94,7 @@ module.exports = {
   getAllProperties,
   getProperty,
   createProperty,
+  editProperty,
   saveProperty,
   bookProperty,
 };

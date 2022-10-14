@@ -22,16 +22,36 @@ export const getPropertyById = createAsyncThunk(
 export const createNewProperty = createAsyncThunk(
   "property/createNewProperty",
   async (propertyData) => {
-    const user =  JSON.parse(localStorage.getItem('user'));
+    const user = JSON.parse(localStorage.getItem("user"));
     console.log("token", user.token);
     const response = await axios.post(
       apiRoutes.property.createPropertyRoute(),
       propertyData,
       {
         headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${user.token}`
-        }
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    console.log("create-property-request", response.data);
+    return response.data;
+  }
+);
+
+export const editProperty = createAsyncThunk(
+  "property/edit-property",
+  async (propertyData) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log("token", user.token);
+    const response = await axios.put(
+      apiRoutes.property.editPropertyRoute(),
+      propertyData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
       }
     );
     console.log("create-property-request", response.data);
@@ -41,12 +61,12 @@ export const createNewProperty = createAsyncThunk(
 
 export const bookProperty = createAsyncThunk(
   "property/bookProperty",
-  async ( property) => {
-    console.log( property)
+  async (property) => {
+    console.log(property);
     const response = await axios.post(
-      apiRoutes.property.bookPropertyRoute( property)
+      apiRoutes.property.bookPropertyRoute(property)
     );
-      console.log("booking -property", response.data);
+    console.log("booking -property", response.data);
     return response.data;
   }
 );

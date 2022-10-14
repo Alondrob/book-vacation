@@ -13,7 +13,6 @@ const HeaderLayout = () => {
   const token = useSelector((state) => state.user.token);
   const user = useSelector((state) => state.user.user);
  
-  console.log(user['is_host'])
   const handleIconClick = (name) => {
     
     switch (name) {
