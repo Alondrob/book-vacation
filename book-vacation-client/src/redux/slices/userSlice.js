@@ -79,7 +79,6 @@ const userSlice = createSlice({
       state.loading = true;
     },
     [getUserProperties.fulfilled]: (state, action) => {
-      console.log(action.payload)
       state.loading = false;
       state.userProperties =  action.payload;
     },

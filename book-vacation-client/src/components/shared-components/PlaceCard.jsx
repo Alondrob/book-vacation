@@ -1,6 +1,9 @@
 import React from "react";
+import { render } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { deleteProperty } from "../../redux/api-requests/propertyRequests";
+import { getUserProperties } from "../../redux/api-requests/userRequests";
 import userSlice from "../../redux/slices/userSlice";
 import SubmitButton from "./SubmitButton";
 
@@ -9,7 +12,7 @@ const PlaceCard = ({ key, id, name, city, state, country, pricePerNight }) => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const userProperties = useSelector((state) => state.user.userProperties);
-  console.log(id);
+
   const handleClick = (name, id) => {
     switch (name) {
       case "Edit":
@@ -17,7 +20,9 @@ const PlaceCard = ({ key, id, name, city, state, country, pricePerNight }) => {
     }
     switch (name) {
       case "Delete":
-      // dispatch(deleteAction)
+        dispatch(deleteProperty(id));
+        const user = JSON.parse(localStorage.getItem("user"));
+        dispatch(getUserProperties(user));
     }
     switch (name) {
       case "Book":

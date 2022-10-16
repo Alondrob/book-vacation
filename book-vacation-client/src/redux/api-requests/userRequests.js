@@ -55,7 +55,6 @@ export const deleteUser = createAsyncThunk(
   "user/deleteUser",
   async (useData) => {
     const response = await axios.delete(apiRoutes.user.createUserRoute());
-    console.log("create-user-request", response.data);
     return response.data;
   }
 );
@@ -70,7 +69,6 @@ export const getUserProperties = createAsyncThunk(
         Authorization: `Bearer ${user.token}`,
       },
           });
-      console.log(response.data)
     return response.data;
   }
 );

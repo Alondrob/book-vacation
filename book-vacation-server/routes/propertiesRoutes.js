@@ -4,6 +4,7 @@ const {
   getUserProperties,
   createProperty, 
   editProperty,
+  deleteProperty,
   saveProperty, 
   bookProperty,
 } = require("../controllers/propertyController");
@@ -18,6 +19,7 @@ router.get("/", getAllProperties);
 router.get("/:id", getProperty);
 router.post("/create-property",loggedInMiddleware, createProperty);
 router.put("/edit-property",loggedInMiddleware, editProperty);
+router.delete("/delete-property/:id",loggedInMiddleware, deleteProperty);
 router.post("/save-property",loggedInMiddleware, saveProperty);
 router.post("/book-property",loggedInMiddleware, bookProperty);
 

@@ -4,6 +4,7 @@ export const apiRoutes = {
     getPropertyById: (id) => `http://localhost:3001/property/${id}`,
     createPropertyRoute: () => "http://localhost:3001/property/create-property",
     editPropertyRoute: () => "http://localhost:3001/property/edit-property",
+    deletePropertyRoute: (id) => `http://localhost:3001/property/delete-property/${id}`,
     bookPropertyRoute: (property) => "http://localhost:3001/property/book-property"
   },
   user: {

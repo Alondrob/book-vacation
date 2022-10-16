@@ -11,12 +11,11 @@ const HostPage = () => {
   const userProperties = useSelector((state) => state.user.userProperties);
 
   const user = JSON.parse(localStorage.getItem("user"));
-  console.log(user.user.userName);
   useEffect(() => {
     dispatch(getUserProperties(user));
   }, []);
 
-  console.log(userProperties);
+
 
   return (
     <div>

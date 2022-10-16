@@ -50,10 +50,11 @@ const editProperty = async (req, res) => {
 };
 
 const deleteProperty = async (req, res) => {
-  const propertyId = req.params.id;
+  console.log("delete- hitting", req.params)
+  const property = await PropertyModel.findById(req.params.id).exec();
+  console.log(property);
   try {
-    const property = await PropertyModel.findById(propertyId).exec();
-    await property.remove();
+    await property?.remove();
     res.json("Property Was Deleted");
   } catch (err) {
     res.status(400).json({ error: err });
@@ -95,6 +96,7 @@ module.exports = {
   getProperty,
   createProperty,
   editProperty,
+  deleteProperty,
   saveProperty,
   bookProperty,
 };

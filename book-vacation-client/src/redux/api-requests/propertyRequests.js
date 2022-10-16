@@ -43,7 +43,6 @@ export const editProperty = createAsyncThunk(
   "property/edit-property",
   async (propertyData) => {
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log("token", user.token);
     const response = await axios.put(
       apiRoutes.property.editPropertyRoute(),
       propertyData,
@@ -54,7 +53,25 @@ export const editProperty = createAsyncThunk(
         },
       }
     );
-    console.log("create-property-request", response.data);
+    return response.data;
+  }
+);
+export const deleteProperty = createAsyncThunk(
+  "property/delete-property",
+  async (id) => {
+    console.log("delete", id)
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log(user.token)
+    const response = await axios.delete(
+      apiRoutes.property.deletePropertyRoute(id),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    console.log("delete response",response.data)
     return response.data;
   }
 );
