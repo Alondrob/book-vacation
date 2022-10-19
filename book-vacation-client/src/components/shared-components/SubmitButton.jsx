@@ -17,7 +17,7 @@ const SubmitButton = ({
     functionProp(name, id)
   }
   return (
-    <div className="flex justify-center">
+    <div className={`flex justify-center   ${width}`}>
       <button
         className={`text-center font-extrabold mt-10 
            bg-yellow-400 hover:bg-blue-200

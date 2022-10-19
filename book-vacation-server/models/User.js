@@ -25,19 +25,24 @@ const userSchema = new Schema({
   host_location: {
     type: String,
   },
-  properties: [{
-    type: mongoose.Types.ObjectId,
-    ref: 'PropertyModel'
-  }],
-
-  booked: {
-    dateIn: { type: Date },
-    dateOut: { type: Date },
-    place: {
+  properties: [
+    {
       type: mongoose.Types.ObjectId,
-      ref: PropertyModel,
+      ref: "PropertyModel",
     },
-  },
+  ],
+
+  bookings: [
+    {
+      place: {
+        type: mongoose.Types.ObjectId,
+        ref: PropertyModel,
+      },
+      dates: {
+        type: [Date],
+      },
+    },
+  ],
 });
 
 const UserModel = mongoose.model("UserModel", userSchema);

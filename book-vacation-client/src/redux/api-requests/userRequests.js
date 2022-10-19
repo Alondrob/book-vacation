@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { apiRoutes } from "../routes/routes";
 
 export const createNewUser = createAsyncThunk(
@@ -20,12 +20,10 @@ export const createNewUser = createAsyncThunk(
 export const loginUser = createAsyncThunk(
   "user/loginUser",
   async (userData) => {
-    console.log("gittingthe request");
     const response = await axios.post(
       apiRoutes.user.loginUserRoute(),
       userData
     );
-    console.log(response);
     if (response.data) {
       localStorage.setItem("user", JSON.stringify(response.data));
       return response.data;
@@ -62,13 +60,67 @@ export const deleteUser = createAsyncThunk(
 export const getUserProperties = createAsyncThunk(
   "user/getUserProperties",
   async (user) => {
-      const response = await axios.get(apiRoutes.user.getUserProperties(user.user._id),
-          {
+    const response = await axios.get(
+      apiRoutes.user.getUserProperties(user.user._id),
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    return response.data;
+  }
+);
+
+export const getUserBookings = createAsyncThunk(
+  "user/getUserBookings",
+  async () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const response = await axios.get(apiRoutes.user.getUserBookingsRoute(), {
       headers: {
         "Content-Type": "application/json",
         Authorization: `Bearer ${user.token}`,
       },
-          });
+    });
+    return response.data;
+  }
+);
+
+export const bookProperty = createAsyncThunk(
+  "user/bookProperty",
+  async (property) => {
+    console.log("property", property);
+    const user = JSON.parse(localStorage.getItem("user"));
+    console.log("user", user.token);
+    const response = await axios.post(
+      apiRoutes.user.bookPropertyRoute(),
+      property,
+      {
+        headers: {
+          "Content-type": "Application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  }
+);
+export const deleteBooking = createAsyncThunk(
+  "user/deleteBooking",
+  async (id) => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    const response = await axios.delete(apiRoutes.user.deleteBookingRoute(), {
+      data: {
+        id: id,
+      },
+      headers: {
+        "Content-type": "Application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+    console.log(response.data);
     return response.data;
   }
 );

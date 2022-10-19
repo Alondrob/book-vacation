@@ -1,5 +1,4 @@
-
-const {generateAccessToken} = require ("../helpers/auth")
+const { generateAccessToken } = require("../helpers/auth");
 const UserModel = require("../models/User");
 const bycrypt = require("bcrypt");
 const PropertyModel = require("../models/Property");
@@ -18,7 +17,6 @@ const createUser = async (req, res) => {
       const token = generateAccessToken(userModel.toObject());
       res.status(201).json({ user: user, token: token });
     } catch (err) {
-
       res.status(400).json({ error: err });
     }
   }
@@ -28,15 +26,15 @@ const loginUser = async (req, res) => {
   const email = req.body.email;
   const user = await UserModel.findOne({ email });
   if (!user) {
-    res.json("There's no account with this email, please try again!")
+    res.json("There's no account with this email, please try again!");
   }
   const match = await bycrypt.compare(req.body.password, user.password);
   if (!match) {
     res.json("Password is invalid, please try again!");
   }
   const token = generateAccessToken(user.toObject());
-  res.status(201).json({ user: user, token: token })
-}
+  res.status(201).json({ user: user, token: token });
+};
 
 const editUser = async (req, res) => {
   const userUpdatedData = {
@@ -65,17 +63,51 @@ const deleteUser = async (req, res) => {
 
 const getUserProperties = async (req, res) => {
   const userId = req.params.id;
-  const user = await UserModel.findById(userId )
+  const user = await UserModel.findById(userId);
   let propArr = new Array();
-  // for (let idx = 0; idx < user.properties.length; idx++){
-  //   let propertyObj = PropertyModel.find(user.properties[idx]);
-  //   propArr.push(propertyObj);
-  // }
-  const properties = await PropertyModel.find({ creator: userId }).sort({createdAt: -1})
+  const properties = await PropertyModel.find({ creator: userId }).sort({
+    createdAt: -1,
+  });
   try {
     res.status(201).json(properties);
-  } catch (err)  {
+  } catch (err) {
     res.status(400).json({ error: "trouble fetching properties" });
+  }
+};
+
+const getUserBookings = async (req, res) => {
+  const user = await UserModel.findById(req.user._id).exec();
+  const place = await PropertyModel.findById(user.bookings[0].place).exec();
+  const userBookings = user.bookings;
+  const bookingArr = new Array();
+  for (let idx = 0; idx < userBookings.length; idx++) {
+    let bookedDates = await user.bookings[idx].dates;
+    let bookedPlace = await PropertyModel.findById(
+      user.bookings[idx].place
+    ).exec();
+    let bookingObject = {
+      property: bookedPlace,
+      dates: bookedDates,
+    };
+    bookingArr.push(bookingObject);
+  }
+  try {
+    res.status(200).json(bookingArr);
+  } catch (err) {
+    res.status(400).json({ error: err });
+  }
+};
+
+const deleteBooking = async (req, res) => {
+  const user = await UserModel.findById(req.user._id).exec();
+  // console.log("hitting delete bookings", req.body.id)
+  const selectedBooking = user.bookings.filter(item => item.place = req.body.id)
+  console.log("selected",selectedBooking);
+  try {
+    await selectedBooking.remove();
+    res.status(201).json("Booking was deleted");
+  } catch (err) {
+    res.status(400).json({ error: err });
   }
 }
 
@@ -84,5 +116,7 @@ module.exports = {
   loginUser,
   editUser,
   deleteUser,
-  getUserProperties
+  getUserProperties,
+  getUserBookings,
+  deleteBooking,
 };

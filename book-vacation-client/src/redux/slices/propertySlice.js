@@ -1,12 +1,10 @@
-import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createSlice } from "@reduxjs/toolkit";
 import {
   getAllProperties,
   createNewProperty,
   getPropertyById,
-  bookProperty
 } from "../api-requests/propertyRequests";
-import { apiRoutes } from "../routes/routes";
+
 
 const initialState = {
   loading: false,
@@ -52,17 +50,6 @@ const propertySlice = createSlice({
       state.createdProperty = action.payload.property;
     },
     [createNewProperty.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = action.error.message;
-    },
-    [bookProperty.pending]: (state) => {
-      state.loading = true;
-    },
-    [bookProperty.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.booked = action.payload.property;
-    },
-    [bookProperty.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     },

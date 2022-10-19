@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { testData } from "../../utils/mockData";
 import { useDispatch, useSelector } from "react-redux";
-import { bookProperty, getPropertyById } from "../../redux/api-requests/propertyRequests";
+import { getPropertyById } from "../../redux/api-requests/propertyRequests";
+import { bookProperty } from "../../redux/api-requests/userRequests";
 import { selectProperties } from "../../redux/slices/propertySlice";
 
 import HeaderLayout from "../../components/header/HeaderLayout";
@@ -13,6 +14,7 @@ import PropertyInputField from "../../components/shared-components/PropertyInput
 const Property = () => {
   const params = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { property, loading, error } = useSelector(selectProperties);
   const [bookingData, setBookingData] = useState({
     fromDate: "",
@@ -45,8 +47,8 @@ const Property = () => {
       toDate: bookingData.toDate ,
       guests: bookingData.guests ,
     };
-    console.log(booking)
-    dispatch(bookProperty( booking))
+    dispatch(bookProperty(booking));
+    // navigate("/guest-page")
   };
 
   return (

@@ -1,4 +1,3 @@
-import React, { Component } from "react";
 import SearchBar from "./SearchBar";
 import { useNavigate } from "react-router-dom";
 import Icon from "../shared-components/Icon";
@@ -65,7 +64,7 @@ const HeaderLayout = () => {
           absolute={"absolute left-24"}
           propFunction={handleIconClick}
         />
-        {user['is_host'] &&
+        {user &&
           <Icon
             name={"my hosting spots"}
             size={48}

@@ -3,7 +3,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import HeaderLayout from "../../components/header/HeaderLayout";
 import PlaceCard from "../../components/shared-components/PlaceCard";
-import SubmitButton from "../../components/shared-components/SubmitButton";
 import { getUserProperties } from "../../redux/api-requests/userRequests";
 
 const HostPage = () => {

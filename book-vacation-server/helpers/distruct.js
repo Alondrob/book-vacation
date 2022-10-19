@@ -21,4 +21,14 @@ const distructObj = (body, user) => {
     }
 }
 
-module.exports = {distructObj}
+const bookedDates = (fromDate, toDate) => {
+    const startDate = new Date(fromDate);
+    const endDate = new Date(toDate);
+    const dates = [];
+    while (endDate > startDate) {
+        startDate.setDate(startDate.getDate() + 1);
+        dates.push(startDate.toJSON());
+    }
+    return dates;
+}
+module.exports = {distructObj, bookedDates}

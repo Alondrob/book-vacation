@@ -76,14 +76,4 @@ export const deleteProperty = createAsyncThunk(
   }
 );
 
-export const bookProperty = createAsyncThunk(
-  "property/bookProperty",
-  async (property) => {
-    console.log(property);
-    const response = await axios.post(
-      apiRoutes.property.bookPropertyRoute(property)
-    );
-    console.log("booking -property", response.data);
-    return response.data;
-  }
-);
+

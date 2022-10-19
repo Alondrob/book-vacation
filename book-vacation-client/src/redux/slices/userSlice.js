@@ -5,6 +5,8 @@ import {
   editUser,
   deleteUser,
   getUserProperties,
+  bookProperty,
+  getUserBookings,
 } from "../api-requests/userRequests";
 
 const initialState = {
@@ -83,6 +85,17 @@ const userSlice = createSlice({
       state.userProperties =  action.payload;
     },
     [getUserProperties.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = action.error.message;
+    },
+     [getUserBookings.pending]: (state) => {
+      state.loading = true;
+    },
+    [getUserBookings.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.userBookings = action.payload;
+    },
+    [getUserBookings.rejected]: (state, action) => {
       state.loading = false;
       state.error = action.error.message;
     },
