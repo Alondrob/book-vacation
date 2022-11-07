@@ -2,16 +2,20 @@ import { useDispatch, useSelector } from "react-redux";
 import HeaderLayout from "../../components/header/HeaderLayout";
 import SubmitButton from "../../components/shared-components/SubmitButton";
 import PlaceCard from "../../components/shared-components/PlaceCard";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUserBookings } from "../../redux/api-requests/userRequests";
 
 const GuestPage = () => {
   const dispatch = useDispatch();
   const user = JSON.parse(localStorage.getItem("user"));
   const userBookings = useSelector(state => state.user.userBookings);
+
+
   useEffect(() => {
     dispatch(getUserBookings());
-  },[])
+  }, [userBookings]);
+
+
   return (
     <div>
       <HeaderLayout />

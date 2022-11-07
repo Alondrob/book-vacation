@@ -24,6 +24,7 @@ const SubmitButton = ({
              h-12
              ${rounded}
             ${marginTop}
+            ${marginRight}
             ${width}
             ${absolute}
              mb-6`}

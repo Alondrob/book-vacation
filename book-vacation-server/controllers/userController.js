@@ -77,8 +77,8 @@ const getUserProperties = async (req, res) => {
 
 const getUserBookings = async (req, res) => {
   const user = await UserModel.findById(req.user._id).exec();
-  const place = await PropertyModel.findById(user.bookings[0].place).exec();
   const userBookings = user.bookings;
+  console.log(userBookings)
   const bookingArr = new Array();
   for (let idx = 0; idx < userBookings.length; idx++) {
     let bookedDates = await user.bookings[idx].dates;
@@ -100,16 +100,30 @@ const getUserBookings = async (req, res) => {
 
 const deleteBooking = async (req, res) => {
   const user = await UserModel.findById(req.user._id).exec();
-  // console.log("hitting delete bookings", req.body.id)
-  const selectedBooking = user.bookings.filter(item => item.place = req.body.id)
-  console.log("selected",selectedBooking);
+  const selectedBooking = user.bookings.find(
+    (item) => (item.place = req.body.id)
+  );
+  const bookingArr = new Array();
+
+  for (let idx = 0; idx < user.bookings.length; idx++) {
+    let bookingObject = user.bookings[idx];
+    if (bookingObject != selectedBooking) {
+      bookingArr.push(bookingObject);
+    }
+  }
+
+  user.bookings = bookingArr;
+
   try {
-    await selectedBooking.remove();
-    res.status(201).json("Booking was deleted");
+    await user.save();
+    res.status(201).json(user.bookings);
   } catch (err) {
     res.status(400).json({ error: err });
   }
-}
+};
+
+
+
 
 module.exports = {
   createUser,

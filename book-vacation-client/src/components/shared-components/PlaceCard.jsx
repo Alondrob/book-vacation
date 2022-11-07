@@ -1,9 +1,15 @@
 import React from "react";
+import { useState } from "react";
+import { confirmAlert } from "react-confirm-alert";
 import { render } from "react-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { deleteProperty } from "../../redux/api-requests/propertyRequests";
-import { deleteBooking, getUserProperties, getUserBookings } from "../../redux/api-requests/userRequests";
+import {
+  deleteBooking,
+  getUserProperties,
+  getUserBookings,
+} from "../../redux/api-requests/userRequests";
 import userSlice from "../../redux/slices/userSlice";
 import SubmitButton from "./SubmitButton";
 
@@ -21,6 +27,7 @@ const PlaceCard = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [renderPage, setRenderPage] = useState(false);
   const user = useSelector((state) => state.user.user);
   const userProperties = useSelector((state) => state.user.userProperties);
 
@@ -46,7 +53,8 @@ const PlaceCard = ({
     }
     switch (name) {
       case "Cancel Booking":
-        dispatch(deleteBooking(id));
+        
+        window.confirm("Are you sure?") && dispatch(deleteBooking(id));
         dispatch(getUserBookings());
     }
     switch (name) {
@@ -137,6 +145,7 @@ const PlaceCard = ({
             name={"Cancel Booking"}
             width={"w-36"}
             marginTop={"mt-4"}
+            marginRight={"mr-2"}
             rounded={"rounded-3xl"}
           />
         )}

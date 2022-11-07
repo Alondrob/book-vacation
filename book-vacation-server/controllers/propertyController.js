@@ -2,6 +2,10 @@ const { json } = require("body-parser");
 const { distructObj, bookedDates } = require("../helpers/distruct");
 const PropertyModel = require("../models/Property");
 const UserModel = require("../models/User");
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+const { uploadFile, getFileStream } = require("../middleware/s3");
+// const s3 = require('../middleware/s3');
 
 const getAllProperties = async (req, res) => {
   const properties = await PropertyModel.find().exec();
@@ -44,7 +48,6 @@ const editProperty = async (req, res) => {
 };
 
 const deleteProperty = async (req, res) => {
-  
   const property = await PropertyModel.findById(req.params.id).exec();
 
   try {
@@ -89,6 +92,28 @@ const saveProperty = async (req, res) => {
   }
 };
 
+const getSignedUrl = async (req, res) => {
+  console.log("hitting the route");
+  const data = await generateUploadUrl();
+  console.log("Url", data);
+  res.json({ data: data });
+};
+
+const uploadImage = async (req, res) => {
+  const file = req.file;
+  const result = await uploadFile(file);
+  res.send(result);
+};
+
+const getImages = async (req, res) => {
+  console.log("hitting the route");
+  console.log(req.params)
+  const key = req.params.key;
+  const readStream = getFileStream(key);
+
+  readStream.pipe(res);
+};
+
 //
 
 module.exports = {
@@ -99,4 +124,7 @@ module.exports = {
   deleteProperty,
   saveProperty,
   bookProperty,
+  getSignedUrl,
+  uploadImage,
+  getImages,
 };

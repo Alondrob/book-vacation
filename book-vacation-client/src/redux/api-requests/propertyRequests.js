@@ -76,4 +76,6 @@ export const deleteProperty = createAsyncThunk(
   }
 );
 
-
+export const uploadImage = createAsyncThunk(
+  
+)

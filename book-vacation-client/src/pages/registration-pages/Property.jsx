@@ -48,7 +48,7 @@ const Property = () => {
       guests: bookingData.guests ,
     };
     dispatch(bookProperty(booking));
-    // navigate("/guest-page")
+    navigate("/guest-page");
   };
 
   return (

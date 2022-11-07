@@ -1,7 +1,6 @@
 const { verifyAccessToken } = require("../helpers/auth");
 
 const loggedInMiddleware = async (req, res, next) => {
-  console.log("auth", req.headers);
   const { authorization } = req.headers;
   
   if (!authorization) {
