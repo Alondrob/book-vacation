@@ -37,7 +37,7 @@ const TryOut = () => {
       >
         Click
           </button>
-          <img src="https://bookvacation.s3.amazonaws.com/3c8af7bb7196deaa0e0cd05c135af78f"/>
+          <img src="https://bookvacation.s3.amazonaws.com/ac47362a9f185036fd7e7a820dc55646"/>
     </div>
   );
 };

@@ -12,6 +12,8 @@ const {
   getImages,
 } = require("../controllers/propertyController");
 const s3 = require("../middleware/s3");
+
+
 const { loggedInMiddleware } = require("../middleware/loggedInMidellware");
 
 const express = require("express");
@@ -35,7 +37,6 @@ router.post("/book-property",loggedInMiddleware, bookProperty);
 router.post("/save-property", loggedInMiddleware, saveProperty);
 router.post("/images", upload.single('file'), uploadImage);
 router.get("/images/:key", getImages);
-
 
 
 

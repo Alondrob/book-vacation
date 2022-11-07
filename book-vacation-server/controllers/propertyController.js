@@ -5,6 +5,9 @@ const UserModel = require("../models/User");
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
 const { uploadFile, getFileStream } = require("../middleware/s3");
+const fs = require("fs");
+const util = require("util");
+const unlinkFile = util.promisify(fs.unlink);
 // const s3 = require('../middleware/s3');
 
 const getAllProperties = async (req, res) => {
@@ -102,6 +105,7 @@ const getSignedUrl = async (req, res) => {
 const uploadImage = async (req, res) => {
   const file = req.file;
   const result = await uploadFile(file);
+  await unlinkFile(file.path)
   res.send(result);
 };
 
