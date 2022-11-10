@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 
 const PostProperty = ({ user }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [propertyData, setPropertyData] = useState({
     name: "",
     address: null,
@@ -77,6 +78,7 @@ const PostProperty = ({ user }) => {
 
   const submitProperty = () => {
     dispatch(createNewProperty(propertyData));
+    navigate('/host-page');
   };
 
   return (

@@ -1,5 +1,6 @@
 const { json } = require("body-parser");
 const { distructObj, bookedDates } = require("../helpers/distruct");
+const dotnev = require("dotenv");
 const PropertyModel = require("../models/Property");
 const UserModel = require("../models/User");
 const multer = require("multer");
@@ -9,6 +10,7 @@ const fs = require("fs");
 const util = require("util");
 const unlinkFile = util.promisify(fs.unlink);
 // const s3 = require('../middleware/s3');
+dotnev.config();
 
 const getAllProperties = async (req, res) => {
   const properties = await PropertyModel.find().exec();
@@ -22,10 +24,13 @@ const getProperty = async (req, res) => {
 };
 
 const createProperty = async (req, res) => {
+  console.log("hitting the route", req.user )
   const user = await UserModel.findOne({ email: req.user.email });
   const newInstanceData = distructObj(req.body, user);
   const property = new PropertyModel(newInstanceData);
-  user.properties.push(property.toObject());
+  console.log("property", ( property))
+  user.properties.push(property);
+  console.log("user-properties", user.properties)
   user.is_host = true;
   try {
     await property.save();
@@ -103,8 +108,15 @@ const getSignedUrl = async (req, res) => {
 };
 
 const uploadImage = async (req, res) => {
+  // console.log("getting here!")
+  // console.log("reqeust", req.body.property_id)
+  const property = await PropertyModel.findById(req.body.property_id).exec();
+  console.log("selected", property)
   const file = req.file;
   const result = await uploadFile(file);
+  console.log("aws-url", result.Location)
+  property.image.push(result.Location);
+  await property.save();
   await unlinkFile(file.path)
   res.send(result);
 };

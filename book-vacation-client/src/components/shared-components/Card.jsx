@@ -11,6 +11,7 @@ const Card = ({ value }) => {
 
   const getProperty = (e) => {
     const id = value._id;
+   
     navigate(`/property/${id}`);
   };
   const handleSave = () => {

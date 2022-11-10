@@ -7,15 +7,12 @@ const propertyRouter = require("./routes/propertiesRoutes");
 const userRouter = require("./routes/userRoutes");
 
 const app = express();
-app.use(
-  cors({
-    origin: "*",
-  })
-);
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 const mongoDBUrl = process.env.MONGODB_URL;
+// const mongoDBUrl = "mongodb+srv://adrob1983:Lam1910@book-vacation-cluster.vqjxuoh.mongodb.net/bookVacDB?retryWrites=true&w=majority";
 
 mongoose.connect(mongoDBUrl, {
   useNewUrlParser: true,

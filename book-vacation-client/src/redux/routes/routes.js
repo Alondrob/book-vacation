@@ -5,6 +5,7 @@ export const apiRoutes = {
     createPropertyRoute: () => "http://localhost:3001/property/create-property",
     editPropertyRoute: () => "http://localhost:3001/property/edit-property",
     deletePropertyRoute: (id) => `http://localhost:3001/property/delete-property/${id}`,
+    uploadImagesRoute: () => "http://localhost:3001/property/images"
     
   },
   user: {

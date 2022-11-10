@@ -1,12 +1,17 @@
 import { useState } from "react";
 import axios from "axios";
+import { BsImages } from "react-icons/bs";
+import { apiRoutes } from "../redux/routes/routes";
+import { uploadImage } from "../redux/api-requests/propertyRequests";
+
 const TryOut = () => {
-  const [image, setImage] = useState({});
+  const [image, setImage] = useState([]);
   const url = "http://localhost:3001/property/images";
 
-  const uploadImage = (e) => {
+    const uploadFile = (e) => {
+      console.log(e.target.files[0])
     const file = e.target.files[0];
-    setImage(file);
+      setImage(file);
   };
 
     const formData = new FormData();
@@ -14,13 +19,8 @@ const TryOut = () => {
 
 
 
-  const submitPics = async () => {
-      const response = await axios.post(
-          url, formData,
-          {
-              
-          });
-      console.log(response)
+  const submitPics =  () => {
+      uploadImage(formData)
   };
 
 
@@ -29,7 +29,7 @@ const TryOut = () => {
       <input
         type="file"
         accept="image/png, image/jpeg"
-        onChange={uploadImage}
+        onChange={uploadFile}
       />
       <button
         onClick={submitPics}
@@ -37,7 +37,7 @@ const TryOut = () => {
       >
         Click
           </button>
-          <img src="https://bookvacation.s3.amazonaws.com/ac47362a9f185036fd7e7a820dc55646"/>
+          {/* <img src="https://bookvacation.s3.amazonaws.com/ac47362a9f185036fd7e7a820dc55646"/> */}
     </div>
   );
 };

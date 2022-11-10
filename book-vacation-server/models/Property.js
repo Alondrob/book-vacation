@@ -21,7 +21,7 @@ const PropertySchema = new Schema({
   amenities: [String],
 
   liked: { type: Boolean, required: false },
-  image: { type: [{ type: String }], required: false },
+  image: [String],
   creator: {
     type: Schema.Types.ObjectId,
     ref: "User",

@@ -36,30 +36,35 @@ const PlaceCard = ({
     return convertedDate[2] + "-" + convertedDate[2] + "-" + convertedDate[0];
   };
 
+   console.log("id", id);
+  const uploadPics = (id) => {
+    console.log("id", id);
+    navigate(`/image/${id}`)
+   
+  }
   const handleClick = (name, id) => {
     switch (name) {
       case "Edit":
         navigate(`/edit-property/${id}`);
-    }
-    switch (name) {
+        break;
       case "Delete":
         dispatch(deleteProperty(id));
         const user = JSON.parse(localStorage.getItem("user"));
         dispatch(getUserProperties(user));
-    }
-    switch (name) {
+        break;
       case "Book":
-      //dispatch booking action
-    }
-    switch (name) {
+        //dispatch booking action
+        break;
       case "Cancel Booking":
-        
         window.confirm("Are you sure?") && dispatch(deleteBooking(id));
         dispatch(getUserBookings());
-    }
-    switch (name) {
+        break;
       case "Save":
-      //dispatch saving action
+        //dispatch saving action
+        break;
+      case "Upload Photos":
+        navigate(`/images/${id}`)
+        break;
     }
   };
   return (
@@ -71,8 +76,18 @@ const PlaceCard = ({
       mx-4 
       `}
       >
-        <div className="h-60">Images</div>
-        <div className="flex justify-center space-x-2  font-semibold italic">
+        <div className="flex justify-center mt-24 h-8">
+          
+          <SubmitButton
+            functionProp={handleClick}
+            id={id}
+            name={"Upload Photos"}
+            width={"w-36"}
+            marginTop={"mt-4"}
+            rounded={"rounded-xl"}
+          />
+        </div>
+        <div className="flex justify-center space-x-2 mt-24  font-semibold italic">
           <span>City: {city.toUpperCase()},</span>
           <span>State: {state.toUpperCase()},</span>
         </div>

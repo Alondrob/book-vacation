@@ -59,9 +59,9 @@ export const editProperty = createAsyncThunk(
 export const deleteProperty = createAsyncThunk(
   "property/delete-property",
   async (id) => {
-    console.log("delete", id)
+    console.log("delete", id);
     const user = JSON.parse(localStorage.getItem("user"));
-    console.log(user.token)
+    console.log(user.token);
     const response = await axios.delete(
       apiRoutes.property.deletePropertyRoute(id),
       {
@@ -71,11 +71,22 @@ export const deleteProperty = createAsyncThunk(
         },
       }
     );
-    console.log("delete response",response.data)
+    console.log("delete response", response.data);
     return response.data;
   }
 );
 
-export const uploadImage = createAsyncThunk(
-  
-)
+export const uploadImage = async (formData) => {
+  const user = JSON.parse(localStorage.getItem("user"));
+  const response = await axios.post(
+    apiRoutes.property.uploadImagesRoute(),
+     formData,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
+      },
+    }
+  );
+  return console.log(response.data);
+};
