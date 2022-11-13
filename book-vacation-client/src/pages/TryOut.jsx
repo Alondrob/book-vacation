@@ -3,6 +3,7 @@ import axios from "axios";
 import { BsImages } from "react-icons/bs";
 import { apiRoutes } from "../redux/routes/routes";
 import { uploadImage } from "../redux/api-requests/propertyRequests";
+import Image from "../components/shared-components/Image";
 
 const TryOut = () => {
   const [image, setImage] = useState([]);
@@ -26,7 +27,7 @@ const TryOut = () => {
 
   return (
     <div className="flex justify-center mt-4">
-      <input
+      {/* <input
         type="file"
         accept="image/png, image/jpeg"
         onChange={uploadFile}
@@ -37,7 +38,8 @@ const TryOut = () => {
       >
         Click
           </button>
-          {/* <img src="https://bookvacation.s3.amazonaws.com/ac47362a9f185036fd7e7a820dc55646"/> */}
+          <img src="https://bookvacation.s3.amazonaws.com/ac47362a9f185036fd7e7a820dc55646"/> */}
+      <Image id={"634b938a35dd4fe3f3eba0fa"} />
     </div>
   );
 };
